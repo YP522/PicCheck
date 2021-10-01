@@ -1,2 +1,2 @@
 # PicCheck
-Get more details and compare pictures
+Check for similarities between two images with python
