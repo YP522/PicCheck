@@ -23,6 +23,7 @@ Get the value in RGB (Red,Green,Blue) for each pixel
 <h4>About RGB</h4>
 Counting the repetition of a colour
 </br>
+</br></br>
 <h2>How to start ?</h2>
 </br>
 Download script and dependecies. Put your 2 images in the same directory. Execute the script :
