@@ -22,7 +22,7 @@ Get the value of distance between 2 colors
 Get the value in hexadecimal for each pixel
 <h4>About RGB</h4>
 Get the value in RGB (Red,Green,Blue) for each pixel
-<h4>About RGB</h4>
+<h4>About ColorOccurences</h4>
 Counting the repetition of a colour
 </br>
 </br></br>
