@@ -26,4 +26,5 @@ Counting the repetition of a colour
 <h2>How to start ?</h2>
 </br>
 Download script and dependecies. Put your 2 images in the same directory. Execute the script :
+
 ```py .\PicCheck.py .\1.png .\2.png```
