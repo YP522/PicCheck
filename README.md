@@ -4,7 +4,7 @@ Check for similarities between two images with python
   <img src="https://ypetit.web-edu.fr/wp-content/uploads/2021/10/picCheck_cover.png" title="PicCheck">
 </p>
 <h2>Features</h2>
-</br></br>
+
 <ul>
   <li>% ColorDiff</li>
   <li>Delta-E</li>
@@ -12,6 +12,8 @@ Check for similarities between two images with python
   <li>ColorRGB</li>
   <li>ColorOccurences</li>
 </ul>
+
+</br>
 <h4>About % ColorDiff</h4>
 Get the percentage of distance between 2 colors
 <h4>About Delta-E</h4>
