@@ -82,8 +82,6 @@ def getPixelOcc(image):
     with image as img:
         width, height = img.size
         rgb_img = img.convert('RGB')
-        r, g, b = rgb_img.getpixel((1, 1))
-
         pixels = list(rgb_img.getdata())
         myList = Counter(pixels).most_common()
         return myList;
