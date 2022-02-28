@@ -1,33 +1,83 @@
 # PicCheck
 Check for similarities between two images with python
+
 <p align="center">
   <img src="https://ypetit.web-edu.fr/wp-content/uploads/2021/10/picCheck_cover.png" title="PicCheck">
 </p>
-<h2>Features</h2>
 
-<ul>
-  <li>% ColorDiff</li>
-  <li>Delta-E</li>
-  <li>ColorHexa</li>
-  <li>ColorRGB</li>
-  <li>ColorOccurences</li>
-</ul>
+## Features
 
-</br>
-<h4>About % ColorDiff</h4>
-Get the percentage of distance between 2 colors
-<h4>About Delta-E</h4>
-Get the value of distance between 2 colors
-<h4>About ColorHexa</h4>
-Get the value in hexadecimal for each pixel
-<h4>About RGB</h4>
-Get the value in RGB (Red,Green,Blue) for each pixel
-<h4>About ColorOccurences</h4>
-Counting the repetition of a colour
-</br>
-</br></br>
-<h2>How to start ?</h2>
-</br>
-Download script and dependecies. Put your 2 images in the same directory. Execute the script :
+### Color Collect
+- Color Hexa
+- Color RGB/RGBA
+- Color Occurences
+- Color Average
+- Color Dominante
+### Color Compare
+- Color Diff / Brightness Diff
+- Color Diff Decimal Number / BrightnessDiff Decimal Number
+- Color Gap / Brightness Gap
+- Delta E
+### Color Compression
+- Compression Level
+- (soon...) Decompression WorkSheet
 
-```py .\PicCheck.py .\1.png .\2.png```
+
+## How to run ?
+Download Source Code Project, Install dependencies and run this command :
+`py .\pck.py img1_path img2_path`
+
+or download executable here :
+https://ypetit.web-edu.fr/piccheck/download/0.0.0/piccheck.exe
+
+
+## Learn how to use ?
+Read the tutorial step by step here : https://ypetit.web-edu.fr/piccheck/get-started/
+
+
+## Commands
+Open the list of commands
+`py .\pck.py help`
+
+Get the version of PCK project
+`py .\pck.py version:`
+
+Learn more about PCK project
+`py .\pck.py about`
+    
+Learn about author(s)
+`py .\pck.py credits:`
+
+Run PCK with 2 pictures
+`py .\pck.py img1_path img2_path`
+
+
+## Motivation of this project
+
+To make reading an image more accessible. 
+To make the comparison between 2 images more accessible.
+To check the veracity of an image (and possible retouching)
+To offer an educational tool in the digital world
+To help :)
+
+## Disclaimer
+### Code
+This project is opensource in order to share a concept.
+The code is not necessarily clean.
+Please remain courteous in your private messages.
+
+If you are interested in improving PicCheck, don't hesitate to join the project ! 
+
+The next missions are :
+
+1. Code maintenance (python best practices)
+
+2. Reduce package usage
+
+3. Reduce processing time
+
+### Errors
+Trouble can happen. That's life. Moreover, I am bad in math. That's why I invite you to correct the calculations if necessary.
+
+### Contact
+Please remain courteous in your private messages. Otherwise the message will be ignored.
