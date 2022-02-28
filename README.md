@@ -64,7 +64,6 @@ To help :)
 ### Code
 This project is opensource in order to share a concept.
 The code is not necessarily clean.
-Please remain courteous in your private messages.
 
 If you are interested in improving PicCheck, don't hesitate to join the project ! 
 
@@ -77,7 +76,7 @@ The next missions are :
 3. Reduce processing time
 
 ### Errors
-Trouble can happen. That's life. Moreover, I am bad in math. That's why I invite you to correct the calculations if necessary.
+Trouble can happen. That's why I invite you to correct the calculations if necessary.
 
 ### Contact
 Please remain courteous in your private messages. Otherwise the message will be ignored.
