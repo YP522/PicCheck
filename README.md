@@ -25,7 +25,7 @@ Check for similarities between two images with python
 
 ## How to run ?
 Download Source Code Project, Install dependencies and run this command :
-`py .\pck.py img1_path img2_path`
+`py .\pck.py run img1_path img2_path`
 
 or download executable here :
 https://ypetit.web-edu.fr/piccheck/download/0.0.0/PicCheck.exe
