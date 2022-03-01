@@ -33,7 +33,7 @@ https://ypetit.web-edu.fr/piccheck/download/0.0.0/piccheck.exe
 
 ## Learn how to use ?
 Read the tutorial step by step here : https://ypetit.web-edu.fr/piccheck/get-started/
-
+Running may take a few minutes to a few hours
 
 ## Commands
 Open the list of commands
@@ -49,16 +49,15 @@ Learn about author(s)
 `py .\pck.py credits:`
 
 Run PCK with 2 pictures
-`py .\pck.py img1_path img2_path`
+`py .\pck.py run img1_path img2_path`
 
 
 ## Motivation of this project
 
 To make reading an image more accessible. 
 To make the comparison between 2 images more accessible.
-To check the veracity of an image (and possible retouching)
-To offer an educational tool in the digital world
-To help :)
+To check the veracity of an image (and possible retouching). 
+To offer an educational tool in the digital world. 
 
 ## Disclaimer
 ### Code
@@ -77,6 +76,3 @@ The next missions are :
 
 ### Errors
 Trouble can happen. That's why I invite you to correct the calculations if necessary.
-
-### Contact
-Please remain courteous in your private messages. Otherwise the message will be ignored.
