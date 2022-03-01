@@ -28,7 +28,7 @@ Download Source Code Project, Install dependencies and run this command :
 `py .\pck.py img1_path img2_path`
 
 or download executable here :
-https://ypetit.web-edu.fr/piccheck/download/0.0.0/piccheck.exe
+https://ypetit.web-edu.fr/piccheck/download/0.0.0/PicCheck.exe
 
 
 ## Learn how to use ?
