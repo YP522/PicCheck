@@ -15,7 +15,7 @@ def aroundValue(value):
     return math.floor(value + 0.5)
 
 def cleanList(listOfValues):
-    return [math.floor(elem + 0.5) for elem in listOfValues ][0:3] 
+    return [aroundValue(elem) for elem in listOfValues ][0:3] 
 
 def reversePercentage(percentage):
     return 100-percentage
@@ -36,12 +36,6 @@ def getColorByPercentage(percentage):
         return "bA"
     else:
         return ""
-
-def setBackgroundByContastColor(color):
-    if color >  (200, 200, 200) :
-        return "cnt"
-    else: return ""
-
 
 def generateHTML(nor_img1,nor_img2):
 
