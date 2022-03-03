@@ -39,17 +39,6 @@ b64_entry_2 = b'iVBORw0KGgoAAAANSUhEUgAAAVkAAAA9CAYAAAAH4BojAAAD30lEQVR4nO3bv24U
 
 sys.path.insert(1, '../')
 
-# from pck_F import pckFunctions
-# from pck_S import pckSystem
-###############################################################################
-#                                    MAIN                                     #
-###############################################################################
-# images = pckSystem.require(sys.argv[1],sys.argv[2])
-
-# img1 = images[0]
-# img2 = images[1]
-
-
 from PIL import Image, ImageTk
 ###############################################################################
 #                               FUNCTIONS                                     #
@@ -90,9 +79,6 @@ def select_file(e):
         filetypes=filetypes)
 
     set_text(e, filename)
-
-# def generate(img1,img2):
-    # start the script
 
 ###############################################################################
 #                                 TKINTER                                     #

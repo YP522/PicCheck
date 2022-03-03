@@ -44,7 +44,6 @@ def run(img1, img2):
     g_i1 = getIMG(img1).convert('RGBA');
     g_i2 = getIMG(img2).convert('RGBA');
 
-    # n_i1=scan(img1);                n_i2=scan(img2);
     if((checkFile(img1) and checkFile(img2)) != True):
         u.log(f"{u.bad} {u.errors[0]}")
     else:
@@ -55,7 +54,7 @@ def run(img1, img2):
         else:
             u.log(f"{u.good} File {g_i1.size} and file {g_i2.size} is equal !")
             u.log(f"\n{u.prefix}")
-            # TO-DO
+
             launchCollect(g_i1, g_i2)
             u.log("  [1/3] End process of color collection...")
 
@@ -63,7 +62,6 @@ def run(img1, img2):
             u.log("  [2/3] End process of color compare...")
 
             launchCompress(g_i1, g_i2)
-
             u.log("  [3/3] End process of color compress...")
 
             u.log(f"\n{u.prefix} \n{u.prefix} {u.good} End of PicCheck Consultation. Find results and Enjoy !")
