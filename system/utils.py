@@ -8,7 +8,7 @@ prefix  = "[PCK]"
 line    = "#######################################################################################"
 good    = "[√]"
 bad     = "[X]"
-errors  = ["File Not found","Not the same size"]
+errors  = ["File Not found", "Not the same size"]
 xlsName = "PicCheck-PRO.xlsx"
 
 slogan = "There is no one who was born under a bad star, there are only people who cannot read the sky | Dalaï Lama"
@@ -20,12 +20,16 @@ time = now.strftime("%H:%M:%S")
 dt_string = "output/"+now.strftime("%d-%m-%Y-%H-%M-%S")
 
 #                                   CMDS                                      #
+
+
 def log(elt):
     return print(f"{prefix} {elt}")
 
+
 credits = f"{prefix} Create by {author}"
 
-help =f"""
+
+help = f"""
 {line}
                   PicChecK {version} » HELP | What can I do to help you ?
 {line}
@@ -40,10 +44,7 @@ help =f"""
 {line}
 """
 
-
-
-
-about =f"""
+about = f"""
 {line}
                   PicChecK {version} » About | What is PicCheck  ?
 {line}

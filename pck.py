@@ -15,6 +15,7 @@ import system.pck_S as s
 import typer
 #####################################################################################################################################
 
+
 class main():
 
     # Start Script
@@ -43,7 +44,7 @@ class main():
     # Start the 3C execution between 2 selected pictures
     @app.command()
     def run(img1: str, img2: str):
-        s.run(img1,img2)
+        s.run(img1, img2)
 
     # init app
     if __name__ == "__main__":

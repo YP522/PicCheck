@@ -11,7 +11,7 @@ Path(u.dt_string+"/report/assets/themes").mkdir(parents=True, exist_ok=True)
 #                                                                XLSX                                                               #
 #####################################################################################################################################
 
-    # N-COLLECT
+# N-COLLECT
 
 NOR_COL = xlsxwriter.Workbook(u.dt_string+"/data/color/normal/n-collect-"+u.xlsName)
 ncol_1 = NOR_COL.add_worksheet("I1 ColorHexa")
@@ -23,7 +23,7 @@ ncol_6 = NOR_COL.add_worksheet("I2 ColorRGBA")
 ncol_7 = NOR_COL.add_worksheet("I1 ColorOccurences")
 ncol_8 = NOR_COL.add_worksheet("I2 ColorOccurences")
 
-    # N-COMPARE
+# N-COMPARE
 
 NOR_COM = xlsxwriter.Workbook(u.dt_string+"/data/color/normal/n-compare-"+u.xlsName)
 ncom_1 = NOR_COM.add_worksheet("% ColorDiff")
@@ -33,7 +33,7 @@ ncom_5 = NOR_COM.add_worksheet("Delta-E")
 
 #####################################################################################################################################
 
-    # G-COLLECT
+# G-COLLECT
 
 GRA_COL = xlsxwriter.Workbook(u.dt_string+"/data/color/grayscale/g-collect-"+u.xlsName)
 gcol_1 = GRA_COL.add_worksheet("I1 ColorHexa")
@@ -45,7 +45,7 @@ gcol_6 = GRA_COL.add_worksheet("I2 ColorRGBA")
 gcol_7 = GRA_COL.add_worksheet("I1 ColorOccurences")
 gcol_8 = GRA_COL.add_worksheet("I2 ColorOccurences")
 
-    # G-COMPARE
+# G-COMPARE
 
 GRA_COM = xlsxwriter.Workbook(u.dt_string+"/data/color/grayscale/g-compare-"+u.xlsName)
 gcom_1 = GRA_COM.add_worksheet("% BrightnessDiff")
@@ -70,18 +70,6 @@ format_img2_near.set_bg_color("#d2eeaa")
 
 #                                                                                                                                   #
 #####################################################################################################################################
-
-
-
-
-
-
-
-
-
-
-
-
 # # normal/compression
 # NOR_DCT_1 = xlsxwriter.Workbook(dt_string+"/dct/img1/n-dct-matrix-"+name)
 # ndct_1_0 = NOR_DCT_1.add_worksheet("DCT Coeff. Value")
@@ -106,12 +94,9 @@ format_img2_near.set_bg_color("#d2eeaa")
 # ndct_2_5 = NOR_DCT_2.add_worksheet("Color Transform Values")
 # ndct_2_6 = NOR_DCT_2.add_worksheet("New Image Decoding Values")
 
-
-
 # # GRA_DCT = xlsxwriter.Workbook(dt_string+"/dct/img2/g-dct-matrix-"+name)
 # # gdct_1 = GRA_DCT.add_worksheet("DCT Coeff. Value")
 # # gdct_2 = GRA_DCT.add_worksheet("IDCT Coeff. Value")
-
 
 # wrap_format_1 = NOR_DCT_1.add_format({'text_wrap': True,'border': True})
 # wrap_format_2 = NOR_DCT_2.add_format({'text_wrap': True,'border': True})

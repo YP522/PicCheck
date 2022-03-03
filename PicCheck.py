@@ -5,17 +5,17 @@
 #lastUpdate : 12/11/2021 11:15 | @version : v1.0.0
 version = "0.0.0"
 
+import base64
+import sys
+
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
-from tkinter import *;
 from tkinter import ttk
 from tkinter import filedialog as fd
 from tkinter.messagebox import showinfo
 from pathlib import Path
 from time import sleep
 from pck import main,u
-import base64
 
-import sys
 
 # IMG BASE64
 
@@ -36,26 +36,6 @@ b64_button_3 = b'iVBORw0KGgoAAAANSUhEUgAAABgAAAAWCAYAAADafVyIAAAAAXNSR0IArs4c6QA
 b64_entry_1 = b'iVBORw0KGgoAAAANSUhEUgAAAVkAAAA9CAYAAAAH4BojAAAD30lEQVR4nO3bv24USRCA8arqnmF9XgSSQVxiJMsEhJzEC/AChA4IeAdERGQ5IkK8AwEB4b0AL3DSkUEAQsIJ/yyBWONlp7vqAu/qsC84EG75zny/cHdm1Zt8atX0qBwWoqISIiK3nzxYHp8ercwGPZtTWhav+R/XA8DPxlIpte72XXyYfJru3Ltyc1dEDvRzQQ/cOL/g1qtHS6cmebXr/bxFdB4pfJiF5XTgZgD4GXmpal2vplVddRhm9u7LuGzfv7ixdzi0f0d2/sWdFw8v9L607lJP+azUnHqXbv9Hj+XfAMB/kOUUMoiUOjPrczJJX2a29+Lu+o03X4d2P5zzDzZfPvq1TPVyNvUS7qZKWAHgX3hEZDUrHpZH8WxrbeP1oqsmIrLYwZapXjaTKtkILAB8I1NVyeZmUstUL9958fDCYidrIiKbLx+P8mCXsqmLMBoAgO+16GY29TzYpc2Xj0ci88jWurOaU+5LuB/nIgHg/66Ee065r3VnVUREN//4/Rcfz34TnY8OAAA/LtRt0v9pMpJzlqKzCI5nAcARsIiwFN1+X5fqGY8I50EXABwJV1WPiLRUz9jgw1iSMosFgKOU1AcfxubunZTjXg0AnDBFxN07M+FVWQBowSRxogAAWiKyANAQkQWAhogsADREZAGgISILAA0RWQBoiMgCQENEFgAaIrIA0BCRBYCGiCwANERkAaAhIgsADRFZAGiIyAJAQ0QWABoisgDQEJEFgIaILAA0RGQBoCEiCwANEVkAaIjIAkBDRBYAGiKyANAQkQWAhogsADREZAGgISILAA0RWQBoiMgCQENEFgAaIrIA0BCRBYCGiCwANGQuVY97EQBwErlUNTMbJB/3UgDghMkiZjZYZ91EajA2AICjVMM66yZW99JHU1WLiONeEwCcBBYRpqp1L300mcp7rzq4KrNZADgCrqpedZCpvLetq9c/R5a32TQ7u1kA+CEeEdk0R5a3W1evfzYRkZRWtksts6zGbBYAfkBWs1LLLKWVbZH5OdmttWvT0vnz4vsPwCwndrQA8B0W3SweVjp/vrV2bSqyeBkhRO+u33iTR/HMXZIUN0YHAPBtPCKkuLlLyqN4dnf9xhsJUZFFZFVCQnRrbeO198NTsVQsWeelqkUKdrYAcJDlFBYpvFS1ZJ1YKt4PT7fWNl5LiIpKiIgcPFEw/+LWq0dLpyZ5tev9vEV0Hil8mBFbABARL1Wt69W0qqsOw8zefRmX7fsXN/a+DqzI4ciKyNcX3H7yYHl8erQyG/RsTmlZvPJuGABYKqXW3b6LD5NP0517V27uiogcDqyIyF9Kp4DuDmUzJgAAAABJRU5ErkJggg=='
 
 b64_entry_2 = b'iVBORw0KGgoAAAANSUhEUgAAAVkAAAA9CAYAAAAH4BojAAAD30lEQVR4nO3bv24USRCA8arqnmF9XgSSQVxiJMsEhJzEC/AChA4IeAdERGQ5IkK8AwEB4b0AL3DSkUEAQsIJ/yyBWONlp7vqAu/qsC84EG75zny/cHdm1Zt8atX0qBwWoqISIiK3nzxYHp8ercwGPZtTWhav+R/XA8DPxlIpte72XXyYfJru3Ltyc1dEDvRzQQ/cOL/g1qtHS6cmebXr/bxFdB4pfJiF5XTgZgD4GXmpal2vplVddRhm9u7LuGzfv7ixdzi0f0d2/sWdFw8v9L607lJP+azUnHqXbv9Hj+XfAMB/kOUUMoiUOjPrczJJX2a29+Lu+o03X4d2P5zzDzZfPvq1TPVyNvUS7qZKWAHgX3hEZDUrHpZH8WxrbeP1oqsmIrLYwZapXjaTKtkILAB8I1NVyeZmUstUL9958fDCYidrIiKbLx+P8mCXsqmLMBoAgO+16GY29TzYpc2Xj0ci88jWurOaU+5LuB/nIgHg/66Ee065r3VnVUREN//4/Rcfz34TnY8OAAA/LtRt0v9pMpJzlqKzCI5nAcARsIiwFN1+X5fqGY8I50EXABwJV1WPiLRUz9jgw1iSMosFgKOU1AcfxubunZTjXg0AnDBFxN07M+FVWQBowSRxogAAWiKyANAQkQWAhogsADREZAGgISILAA0RWQBoiMgCQENEFgAaIrIA0BCRBYCGiCwANERkAaAhIgsADRFZAGiIyAJAQ0QWABoisgDQEJEFgIaILAA0RGQBoCEiCwANEVkAaIjIAkBDRBYAGiKyANAQkQWAhogsADREZAGgISILAA0RWQBoiMgCQENEFgAaIrIA0BCRBYCGiCwANGQuVY97EQBwErlUNTMbJB/3UgDghMkiZjZYZ91EajA2AICjVMM66yZW99JHU1WLiONeEwCcBBYRpqp1L300mcp7rzq4KrNZADgCrqpedZCpvLetq9c/R5a32TQ7u1kA+CEeEdk0R5a3W1evfzYRkZRWtksts6zGbBYAfkBWs1LLLKWVbZH5OdmttWvT0vnz4vsPwCwndrQA8B0W3SweVjp/vrV2bSqyeBkhRO+u33iTR/HMXZIUN0YHAPBtPCKkuLlLyqN4dnf9xhsJUZFFZFVCQnRrbeO198NTsVQsWeelqkUKdrYAcJDlFBYpvFS1ZJ1YKt4PT7fWNl5LiIpKiIgcPFEw/+LWq0dLpyZ5tev9vEV0Hil8mBFbABARL1Wt69W0qqsOw8zefRmX7fsXN/a+DqzI4ciKyNcX3H7yYHl8erQyG/RsTmlZvPJuGABYKqXW3b6LD5NP0517V27uiogcDqyIyF9Kp4DuDmUzJgAAAABJRU5ErkJggg=='
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 sys.path.insert(1, '../')
 
@@ -132,7 +112,7 @@ def relative_to_assets(path: str) -> Path:
 
 
 #window.iconbitmap(data=b64_logo_ico)
-win_logo=PhotoImage(data=b64_logo_png)
+win_logo = PhotoImage(data=b64_logo_png)
 window.wm_iconphoto(True, win_logo)
 window.title(f'PickCheck v{u.version} Executable | Compare differences/similarities between 2 images')
 window.geometry("862x519")
@@ -236,7 +216,7 @@ button_2 = Button(
     image=button_image_2,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda:select_file(entry_1) ,
+    command=lambda:select_file(entry_1),
     bg="#ddf3e8",
     relief="flat"
 )
@@ -283,7 +263,7 @@ button_3.place(
     height=22.0
 )
 
-logo=PhotoImage(data=b64_logo_png)
+logo = PhotoImage(data=b64_logo_png)
 canvas.create_image(
     80,
     415,
