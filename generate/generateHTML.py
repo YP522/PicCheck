@@ -34,8 +34,8 @@ def generateHTML(nor_img1, nor_img2):
     for_col_nor_dom_img_2 = cleanList(col_nor_dom_img_2)
     pc_col_dom = getDiff(col_nor_dom_img_1, col_nor_dom_img_2, 0)
 
-    col_gra_occ = aroundValue(getColorOccurences(gra_img1, gra_img1)[1])
-    col_gra_avg_img_1 = getColorAverage(gra_img1, gra_img1)[0]
+    col_gra_occ = aroundValue(getColorOccurences(gra_img1, gra_img2)[1])
+    col_gra_avg_img_1 = getColorAverage(gra_img1, gra_img2)[0]
     col_gra_avg_img_2 = getColorAverage(gra_img1, gra_img2)[1]
     for_col_gra_avg_img_1 = cleanList(col_gra_avg_img_1)
     for_col_gra_avg_img_2 = cleanList(col_gra_avg_img_2)
