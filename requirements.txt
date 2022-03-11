@@ -1,4 +1,4 @@
-colour==0.1.5
+colour-science==0.4.1
 numpy>=1.21
 Pillow==9.0.1
 typer==0.4.0
