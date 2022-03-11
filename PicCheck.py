@@ -2,13 +2,14 @@
 #                                  DESIGN                                     #
 ###############################################################################
 
-#lastUpdate : 12/11/2021 11:15 | @version : v1.0.0
+#lastUpdate : 10/03/2022 18:00 | @version : v1.0.0
 version = "0.0.0"
 
 import base64
 import sys
 
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+from tkinter import BOTH, END, LEFT
 from tkinter import ttk
 from tkinter import filedialog as fd
 from tkinter.messagebox import showinfo
@@ -48,6 +49,7 @@ window = Tk()
 
 def dialog():
     var = showinfo("Success !" , "Success report ! Go to the output repertory")
+    window.destroy()
 
 def startProgram():
 
