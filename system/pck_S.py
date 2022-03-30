@@ -14,12 +14,19 @@
 from PIL import Image
 import numpy as np
 from system.pck_M import *
+from generate.generateFolders import createFolders
 from system import utils as u
 import os
 #####################################################################################################################################
 
 
 def checkFile(path):
+    """
+    Check if the path is a file or a directory
+    
+    :param path: The path to the file or directory
+    :return: A boolean value. True if the path is a file, False if the path is a directory.
+    """
     if(os.path.exists(path)):
         if os.path.isfile(path):
             return True;
@@ -29,18 +36,31 @@ def checkFile(path):
             print('The location doesn\'t exist')
 
 
-# Read image
 def getIMG(file):
+    """
+    This function takes a file path as an argument and returns an image object
+    
+    :param file: The path to the image file
+    :return: A PIL Image object.
+    """
     return Image.open(file)
 
 
-# Read picture with numpy
 def scan(img):
+    """
+    This function takes in an image and returns a numpy array of the image
+    
+    :param img: The image to be scanned
+    :return: The function scan returns an array of the image.
+    """
     return np.array(getIMG(img))
 
 
-# Run the script
 def run(img1, img2):
+    """
+    :param img1: The first image to compare
+    :param img2: The image to compare with
+    """
     g_i1 = getIMG(img1).convert('RGBA');
     g_i2 = getIMG(img2).convert('RGBA');
 
@@ -54,6 +74,8 @@ def run(img1, img2):
         else:
             u.log(f"{u.good} File {g_i1.size} and file {g_i2.size} is equal !")
             u.log(f"\n{u.prefix}")
+
+            createFolders()            
 
             launchCollect(g_i1, g_i2)
             u.log("  [1/3] End process of color collection...")

@@ -2,6 +2,9 @@ from system import utils as u
 
 
 def generateDefaultThemes():
+    """
+    Generate the default themes for the report
+    """
     viridis = """
         :root{
 

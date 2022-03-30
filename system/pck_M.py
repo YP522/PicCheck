@@ -13,8 +13,10 @@
 #####################################################################################################################################
 from processing.collect import *
 from processing.compare import *
+from processing.compression import tile, writeBlocInCell
 from generate.generateXLSX import *
 from generate.generateHTML import *
+
 from system import utils as u
 from PIL import Image
 import time
@@ -23,10 +25,13 @@ import numpy as np
 
 #####################################################################################################################################
 
-# Classe qui va executer les missions pour les images
-
-
 def launchCollect(image1, image2):
+    """
+    This function is used to collect the color data from the images and save it in a spreadsheet
+    
+    :param image1: the first image to compare
+    :param image2: the second image to compare with the first one
+    """
     u.log("  [1/3] Start process of color collection...")
     width, height = image1.size
 
@@ -113,6 +118,18 @@ def launchCompare(image1, image2):
     limage1 = image1.convert('RGB');
     limage2 = image2.convert('RGB');
 
+    mat_nor_0 = saveMatchedPixels(image1,image2,0)
+    mat_nor_1 = saveMatchedPixels(image1,image2,1) 
+
+    mat_gra_0 = saveMatchedPixels(image1,image2,0)
+    mat_gra_1 = saveMatchedPixels(image1,image2,1)  
+
+    mat_nor_0.save(u.dt_string+"/data/matched_nor_0.png")
+    mat_nor_1.save(u.dt_string+"/data/matched_nor_1.png")
+
+    mat_gra_0.save(u.dt_string+"/data/matched_gra_0.png")
+    mat_gra_1.save(u.dt_string+"/data/matched_gra_1.png")
+
     for index_x in range(height):
         for index_y in range(width):
 
@@ -122,7 +139,7 @@ def launchCompare(image1, image2):
 
             ncom_1.write(index_x, index_y, getDiff(i1, i2, 0))
 
-            getDifferences(ncom_2, index_x, index_y, i1, i2, format_img1, format_img1_near)
+            getDifferences(ncom_2, index_x, index_y, i1, i2, format_img1, format_img1_near)           
 
             ncom_3.write(index_x, index_y, str(getGap(i1, i2)))
             ncom_5.write(index_x, index_y, getDELTA_E_VALUE(i1, i2))
@@ -148,6 +165,12 @@ def launchCompare(image1, image2):
 
 def launchCompress(image1, image2):
     u.log("  [3/3] Start process of color compress...")
+    tile(image1,8,'img1')
+    tile(image2,8,'img2')
     generateHTML(image1, image2)
 
-#     # XLSX report
+#     # DCT XLSX REPORT REMPLISSAGE
+    writeBlocInCell(image1,image2)
+
+    NOR_DCT_1.close()
+    NOR_DCT_2.close()

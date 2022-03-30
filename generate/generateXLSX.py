@@ -1,11 +1,5 @@
 import xlsxwriter
 from system import utils as u
-from pathlib import Path
-
-# CREATE FOLDERS #
-Path(u.dt_string+"/data/color/normal").mkdir(parents=True, exist_ok=True)
-Path(u.dt_string+"/data/color/grayscale").mkdir(parents=True, exist_ok=True)
-Path(u.dt_string+"/report/assets/themes").mkdir(parents=True, exist_ok=True)
 
 #####################################################################################################################################
 #                                                                XLSX                                                               #
@@ -70,33 +64,44 @@ format_img2_near.set_bg_color("#d2eeaa")
 
 #                                                                                                                                   #
 #####################################################################################################################################
-# # normal/compression
-# NOR_DCT_1 = xlsxwriter.Workbook(dt_string+"/dct/img1/n-dct-matrix-"+name)
+# normal/compression
+NOR_DCT_1 = xlsxwriter.Workbook(u.dt_string+"/data/dct/img1/n-dct-matrix-"+u.xlsName)
 # ndct_1_0 = NOR_DCT_1.add_worksheet("DCT Coeff. Value")
+# ndct_1_0 = NOR_DCT_1.add_worksheet("DCT Input Matrix")
 
-#     # decompressed steps
+    # decompressed steps
 # ndct_1_1 = NOR_DCT_1.add_worksheet("Decoding Values")
-# ndct_1_2 = NOR_DCT_1.add_worksheet("Dequantization Values")
-# ndct_1_3 = NOR_DCT_1.add_worksheet("IDCT Coeff. Values")
+ndct_1_1 = NOR_DCT_1.add_worksheet("DCT Input Matrix")
+ndct_1_2 = NOR_DCT_1.add_worksheet("DCT Coeff. Value")
+ndct_1_3 = NOR_DCT_1.add_worksheet("Dequantization Values")
+ndct_1_4 = NOR_DCT_1.add_worksheet("IDCT Coeff. Values")
 # ndct_1_4 = NOR_DCT_1.add_worksheet("Up Sampling Values")
 # ndct_1_5 = NOR_DCT_1.add_worksheet("Color Transform Values")
 # ndct_1_6 = NOR_DCT_1.add_worksheet("New Image Decoding Values")
 
 
-# NOR_DCT_2 = xlsxwriter.Workbook(dt_string+"/dct/img2/n-dct-matrix-"+name)
+NOR_DCT_2 = xlsxwriter.Workbook(u.dt_string+"/data/dct/img2/n-dct-matrix-"+u.xlsName)
 # ndct_2_0 = NOR_DCT_2.add_worksheet("DCT Coeff. Value")
+# ndct_2_0 = NOR_DCT_2.add_worksheet("DCT Input Matrix")
 
-#     # decompressed steps
+    # decompressed steps
 # ndct_2_1 = NOR_DCT_2.add_worksheet("Decoding Values")
-# ndct_2_2 = NOR_DCT_2.add_worksheet("Dequantization Values")
-# ndct_2_3 = NOR_DCT_2.add_worksheet("IDCT Coeff. Values")
+ndct_2_1 = NOR_DCT_2.add_worksheet("DCT Input Matrix")
+ndct_2_2 = NOR_DCT_2.add_worksheet("DCT Coeff. Value")
+ndct_2_3 = NOR_DCT_2.add_worksheet("Dequantization Values")
+ndct_2_4 = NOR_DCT_2.add_worksheet("IDCT Coeff. Values")
 # ndct_2_4 = NOR_DCT_2.add_worksheet("Up Sampling Values")
 # ndct_2_5 = NOR_DCT_2.add_worksheet("Color Transform Values")
 # ndct_2_6 = NOR_DCT_2.add_worksheet("New Image Decoding Values")
 
-# # GRA_DCT = xlsxwriter.Workbook(dt_string+"/dct/img2/g-dct-matrix-"+name)
-# # gdct_1 = GRA_DCT.add_worksheet("DCT Coeff. Value")
-# # gdct_2 = GRA_DCT.add_worksheet("IDCT Coeff. Value")
+# GRA_DCT = xlsxwriter.Workbook(dt_string+"data/dct/img2/g-dct-matrix-"+name)
+# gdct_1 = GRA_DCT.add_worksheet("DCT Coeff. Value")
+# gdct_2 = GRA_DCT.add_worksheet("IDCT Coeff. Value")
 
-# wrap_format_1 = NOR_DCT_1.add_format({'text_wrap': True,'border': True})
-# wrap_format_2 = NOR_DCT_2.add_format({'text_wrap': True,'border': True})
+wrap_format_1 = NOR_DCT_1.add_format({'text_wrap': True,'border': True})
+wrap_format_2 = NOR_DCT_2.add_format({'text_wrap': True,'border': True})
+
+# functions
+
+# def writeBlocInSheet(matrix, sheet, x, y):
+#     sheet.write(matrix, x, y, wrap_format_1)
