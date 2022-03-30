@@ -18,9 +18,11 @@ Check for similarities between two images with python
 - Color Diff Decimal Number / BrightnessDiff Decimal Number
 - Color Gap / Brightness Gap
 - Delta E
+- Image including identical pixels
 ### Color Compression
 - Compression Level
-- (soon...) Decompression WorkSheet
+- Decompression WorkSheet : DCT / IDCT
+- Tiles of 8x8 blocs
 
 
 ## How to run ?
