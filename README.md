@@ -51,14 +51,6 @@ Learn about author(s)
 Run PCK with 2 pictures
 `py .\pck.py run img1_path img2_path`
 
-
-## Motivation of this project
-
-To make reading an image more accessible. 
-To make the comparison between 2 images more accessible.
-To check the veracity of an image (and possible retouching). 
-To offer an educational tool in the digital world. 
-
 ## Disclaimer
 ### Code
 This project is opensource in order to share a concept.
