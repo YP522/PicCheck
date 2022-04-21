@@ -2,6 +2,7 @@ from PIL import Image
 
 from generate.funcs.formatted import aroundValue, cleanList, reversePercentage, getPercentageBetween, getColorByPercentage
 from generate.generateCSS import generateDefaultThemes, generateReportCss
+from generate.generateTXT import generateTXT
 from generate.parts.favicon import generateFavIcon
 from generate.parts.html import setWigdetListForColorCol, setWigdetListForCompare, setWigdetListForCompression
 from generate.parts.logo import generateLogo

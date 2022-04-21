@@ -11,15 +11,23 @@
 # _________________________________________________________________________________________________________________________________ #
 #                                                             Machinery                                                             #
 #####################################################################################################################################
-from PIL import Image
-import numpy as np
-import glob, cv2
-import system.utils as u
-import numpy
-from generate.generateXLSX import *
 from itertools import product
+from math import log10, sqrt
 from pathlib import Path
+from PIL import Image
+
+import cv2
+import numpy as np
+import skimage
+import system.utils as u
+from generate.generateXLSX import *
+
 #####################################################################################################################################
+
+d = 8 ;
+
+wrap_format_1 = NOR_DCT_1.add_format({'text_wrap': True,'border': True})
+wrap_format_2 = NOR_DCT_2.add_format({'text_wrap': True,'border': True})
 
 
 def getCompressionLevel(img, imgFile):
@@ -36,9 +44,45 @@ def getCompressionLevel(img, imgFile):
     return quality;
 
 
-wrap_format_1 = NOR_DCT_1.add_format({'text_wrap': True,'border': True})
-wrap_format_2 = NOR_DCT_2.add_format({'text_wrap': True,'border': True})
+def PSNR(original, compressed):
+    """
+    Compute the PSNR of the compressed image and the original image
+    
+    :param original: The original image
+    :param compressed: The compressed image
+    :return: the PSNR value for the two images.
+    """
+    mse = np.mean((original - compressed) ** 2)
+    if(mse == 0):  # MSE is zero means no noise is present in the signal .
+                  # Therefore PSNR have no importance.
+        return 100
+    max_pixel = 255.0
+    psnr = 20 * log10(max_pixel / sqrt(mse))
+    return psnr
 
+
+def SSIM(original, compressed):
+    """
+    Compute the SSIM of the compressed image and the original image
+    
+    :param original: The original image
+    :param compressed: The compressed image
+    :return: the SSIM value for the two images.
+    """
+    return skimage.metrics.structural_similarity(original, compressed, channel_axis=2)
+
+
+def MSE(original, compressed):
+    """
+    Compute the MSE of the compressed image and the original image
+    
+    :param original: The original image
+    :param compressed: The compressed image
+    :return: the MSE value for the two images.
+    """
+    mse = np.mean((original - compressed) ** 2)
+    return mse
+    
 
 def formatToGridWithCommas(matrix):
     """
@@ -49,7 +93,7 @@ def formatToGridWithCommas(matrix):
     """
     return np.array2string(np.int32(matrix), separator=', ')
 
-# dct
+
 def dec_DCT(matrix):
     """
     Convert a matrix of integers to floats, perform the DCT on the matrix, then convert the result back
@@ -63,7 +107,7 @@ def dec_DCT(matrix):
     dst = cv2.dct(blockf)
     return np.int32(dst)
 
-# idct
+
 def dec_InverseDCT(matrix):
     """
     # The function dec_InverseDCT() is the inverse of the function dec_DCT(). It takes a string
@@ -77,6 +121,7 @@ def dec_InverseDCT(matrix):
     dst = cv2.dct(blockf)
     block = cv2.idct(dst)
     return np.int32(block)
+
 
 def upSampling(array):
     """
@@ -99,23 +144,15 @@ def tile(img, d, imgName):
     """
     if img.mode == "RGBA":
         img = img.convert("RGB")
-    # Path(f"{u.dt_string}/data/dct/{imgName}/tiles").mkdir(parents=True, exist_ok=True)
     w, h = img.size
     grid = product(range(0, h-h%d, d), range(0, w-w%d, d))
     for i, j in grid:
         box = (j, i, j+d, i+d)
         out = f'{u.dt_string}/data/dct/{imgName}/tiles/tile_{i}_{j}.jpg'
-        out2 = f'{u.dt_string}/data/idct/{imgName}/tiles/tile_{i}_{j}.jpg' 
-        # Path(f'{u.dt_string}/data/dct/{imgName}/tiles/').mkdir(parents=True, exist_ok=True)          
-        # Path(f'{u.dt_string}/data/idct/{imgName}/tiles/').mkdir(parents=True, exist_ok=True)  
          
         img.crop(box).save(out)
 
 
-# FONCTIONNEL MAIS PAS PROPRE, À REVOIR !
-# IDCT TILES : appeler et modifier la fonction Tiles Esitante
-# REPLACE 8 by a constant named d
-# Externaliser la création de répertoire : Créer un fichier generateFolders.py et put tous les PATH(...).mkdir(...)
 def writeBlocInCell(img,img2):
     """
     This procedure is used to set DCT data in cells and save IDCT Tiles in folder. 
@@ -124,20 +161,16 @@ def writeBlocInCell(img,img2):
     :param img2: 
     """    
     w, h = img.size
-    grid = product(range(0, h-h%8, 8), range(0, w-w%8, 8))
+    grid = product(range(0, h-h%d, d), range(0, w-w%d, d))
     for i, j in grid:
-        x = int(i/8)
-        y = int(j/8)
-        box = (j, i, j+8, i+8)
+        x = int(i/d)
+        y = int(j/d)
+        box = (j, i, j+d, i+d)
  
 
-        out2 = f'{u.dt_string}/data/idct/img1/tiles/tile_{i}_{j}.jpg'     
-        out3 = f'{u.dt_string}/data/idct/img2/tiles/tile_{i}_{j}.jpg'                  
-        # Path(f'{u.dt_string}/data/idct/img1/tiles/').mkdir(parents=True, exist_ok=True)  
-        # Path(f'{u.dt_string}/data/idct/img2/tiles/').mkdir(parents=True, exist_ok=True)  
+        out2 = f'{u.dt_string}/data/idct/img1/tiles/tile_{i}_{j}.jpg'
+        out3 = f'{u.dt_string}/data/idct/img2/tiles/tile_{i}_{j}.jpg'
         
-
-
 
         # 1 - Decoding
         img8=img.crop(box).convert("L")
@@ -161,7 +194,7 @@ def writeBlocInCell(img,img2):
 
         ndct_1_3.write(x, y, str(qblock), wrap_format_1)
         ndct_1_3.set_row(x, 155)
-        ndct_1_3.set_column(x,y, 25)        
+        ndct_1_3.set_column(x,y, 25)
 
 
         # 4 - Inverse DCT

@@ -1,5 +1,6 @@
-colour-science==0.4.1
+colour-science>=0.4.1
 numpy>=1.21
-Pillow==9.0.1
-typer==0.4.0
-XlsxWriter==3.0.1
+Pillow>=9.0.1
+typer>=0.4.0
+XlsxWriter>=3.0.1
+skimage>=0.16.2

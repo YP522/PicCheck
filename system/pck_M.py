@@ -11,17 +11,15 @@
 # _________________________________________________________________________________________________________________________________ #
 #                                                             Machinery                                                             #
 #####################################################################################################################################
-from processing.collect import *
-from processing.compare import *
-from processing.compression import tile, writeBlocInCell
 from generate.generateXLSX import *
 from generate.generateHTML import *
+from generate.generateTXT import *
+
+from processing.collect import *
+from processing.compare import *
+from processing.compression import tile
 
 from system import utils as u
-from PIL import Image
-import time
-import threading
-import numpy as np
 
 #####################################################################################################################################
 
@@ -32,7 +30,7 @@ def launchCollect(image1, image2):
     :param image1: the first image to compare
     :param image2: the second image to compare with the first one
     """
-    u.log("  [1/3] Start process of color collection...")
+    u.log("  [1/3] Start process of color collection...")   
     width, height = image1.size
 
     image1.save(u.dt_string+"/data/img1.png")
@@ -108,7 +106,7 @@ def launchCollect(image1, image2):
 
 
 def launchCompare(image1, image2):
-    u.log("  [2/3] Start process of color compare...")
+    u.log("  [2/3] Start process of color compare...")  
     width, height = image1.size
 
     image1 = image1.convert('RGB');
@@ -167,10 +165,4 @@ def launchCompress(image1, image2):
     u.log("  [3/3] Start process of color compress...")
     tile(image1,8,'img1')
     tile(image2,8,'img2')
-    generateHTML(image1, image2)
 
-#     # DCT XLSX REPORT REMPLISSAGE
-    writeBlocInCell(image1,image2)
-
-    NOR_DCT_1.close()
-    NOR_DCT_2.close()

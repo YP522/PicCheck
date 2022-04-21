@@ -11,11 +11,15 @@
 # _________________________________________________________________________________________________________________________________ #
 #                                                               System                                                              #
 #####################################################################################################################################
-from PIL import Image
-import numpy as np
-from system.pck_M import *
 from generate.generateFolders import createFolders
+from processing.compression import writeBlocInCell
+
+from PIL import Image
+
+from system.pck_M import *
 from system import utils as u
+
+import numpy as np
 import os
 #####################################################################################################################################
 
@@ -86,6 +90,14 @@ def run(img1, img2):
             launchCompress(g_i1, g_i2)
             u.log("  [3/3] End process of color compress...")
 
+            generateTXT(g_i1,g_i2)  
+            generateHTML(g_i1,g_i2)
+            writeBlocInCell(g_i1,g_i2)
+
+            NOR_DCT_1.close()
+            NOR_DCT_2.close()            
+
             u.log(f"\n{u.prefix} \n{u.prefix} {u.good} End of PicCheck Consultation. Find results and Enjoy !")
             u.log(u.slogan)
             u.log(f"\n{u.prefix} Please see report at : {u.dt_string}/report/report.html")
+

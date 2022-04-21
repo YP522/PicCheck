@@ -23,6 +23,8 @@ Check for similarities between two images with python
 - Compression Level
 - Decompression WorkSheet : DCT / IDCT
 - Tiles of 8x8 blocs
+- PSNR, SSIM, MSE
+- ENTROPY, EXIF
 
 
 ## How to run ?
