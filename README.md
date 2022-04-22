@@ -2,7 +2,7 @@
 Check for similarities between two images with python
 
 <p align="center">
-  <img src="https://ypetit.web-edu.fr/wp-content/uploads/2022/02/picCheck_cover.png" title="PicCheck">
+  <img src="https://ypetit.web-edu.fr/wp-content/uploads/2022/04/github_banner.png" title="PicCheck">
 </p>
 
 ## Features
