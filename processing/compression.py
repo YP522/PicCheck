@@ -19,6 +19,7 @@ from PIL import Image
 import cv2
 import numpy as np
 import skimage
+import skimage.metrics as skm
 import system.utils as u
 from generate.generateXLSX import *
 
@@ -69,7 +70,7 @@ def SSIM(original, compressed):
     :param compressed: The compressed image
     :return: the SSIM value for the two images.
     """
-    return skimage.metrics.structural_similarity(original, compressed, channel_axis=2)
+    return skm.structural_similarity(original, compressed, channel_axis=2)
 
 
 def MSE(original, compressed):
