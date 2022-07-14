@@ -31,16 +31,16 @@ wrap_format_1 = NOR_DCT_1.add_format({'text_wrap': True,'border': True})
 wrap_format_2 = NOR_DCT_2.add_format({'text_wrap': True,'border': True})
 
 
-def get_compression_level(img, imgFile):
+def get_compression_level(img, img_file):
     """
     Given an image and its file name, return the compression level
     
     :param img: the image object
-    :param imgFile: The name of the image file
+    :param img_file: The name of the image file
     :return: The quality of the image.
     """
 
-    path = f"{u.dt_string}/data/{imgFile}.png"
+    path = f"{u.dt_string}/data/{img_file}.png"
     quality = (101-((img.width*img.height)*3)/(Path(path).stat().st_size))
     return quality;
 
@@ -135,13 +135,13 @@ def upSampling(array):
     return np.array(array.repeat(2, axis=0).repeat(2, axis=1))
 
 
-def tile(img, d, imgName):
+def tile(img, d, img_name):
     """
     This function is used to split the image into tiles and save them in a folder. 
 
     :param img: the image to be compressed
     :param d: The size of the tiles
-    :param imgName: the name of the image to be processed
+    :param img_name: the name of the image to be processed
     """
     if img.mode == "RGBA":
         img = img.convert("RGB")
@@ -149,7 +149,7 @@ def tile(img, d, imgName):
     grid = product(range(0, h-h%d, d), range(0, w-w%d, d))
     for i, j in grid:
         box = (j, i, j+d, i+d)
-        out = f'{u.dt_string}/data/dct/{imgName}/tiles/tile_{i}_{j}.jpg'
+        out = f'{u.dt_string}/data/dct/{img_name}/tiles/tile_{i}_{j}.jpg'
          
         img.crop(box).save(out)
 
@@ -183,8 +183,8 @@ def write_bloc_in_cell(img,img2):
         ndct_1_1.set_column(x, y, 25)
 
         # 2 - DCT
-        blockDCT = dec_dct(str(block))
-        ndct_1_2.write(x, y, format_to_grid_with_commas(blockDCT), wrap_format_1)
+        block_dct = dec_dct(str(block))
+        ndct_1_2.write(x, y, format_to_grid_with_commas(block_dct), wrap_format_1)
         ndct_1_2.set_row(x, 155)
         ndct_1_2.set_column(x, y, 25)        
 
@@ -199,13 +199,13 @@ def write_bloc_in_cell(img,img2):
 
 
         # 4 - Inverse DCT
-        blockIDCT=(dec_inverse_dct(format_to_grid_with_commas(blockDCT)))
+        block_idct=(dec_inverse_dct(format_to_grid_with_commas(block_dct)))
 
-        ndct_1_4.write(x, y, format_to_grid_with_commas(blockIDCT), wrap_format_1)
+        ndct_1_4.write(x, y, format_to_grid_with_commas(block_idct), wrap_format_1)
         ndct_1_4.set_row(x, 155)
         ndct_1_4.set_column(x, y, 25)
         
-        idct_img = Image.fromarray(np.uint8(blockIDCT))
+        idct_img = Image.fromarray(np.uint8(block_idct))
         idct_img.save(out2)        
 
 
@@ -223,10 +223,10 @@ def write_bloc_in_cell(img,img2):
         ndct_2_1.set_column(x,y, 25)
 
         # 2 - DCT
-        blockDCT2 = dec_dct(str(block_v2))
+        block_dct2 = dec_dct(str(block_v2))
         # print(format_to_grid_with_commas(dec_dct(str(block_v2))))
               
-        ndct_2_2.write(x, y, format_to_grid_with_commas(blockDCT2), wrap_format_1) 
+        ndct_2_2.write(x, y, format_to_grid_with_commas(block_dct2), wrap_format_1) 
         ndct_2_2.set_row(x, 155)
         ndct_2_2.set_column(x, y, 25)
 
@@ -240,13 +240,13 @@ def write_bloc_in_cell(img,img2):
         ndct_2_3.set_column(x,y, 25)        
 
         # 4 - Inverse DCT
-        blockIDCT_v2=(dec_inverse_dct(format_to_grid_with_commas(blockDCT2)))
+        block_idct_v2=(dec_inverse_dct(format_to_grid_with_commas(block_dct2)))
         
-        ndct_2_4.write(x, y, format_to_grid_with_commas(blockIDCT_v2), wrap_format_2)
+        ndct_2_4.write(x, y, format_to_grid_with_commas(block_idct_v2), wrap_format_2)
         ndct_2_4.set_row(x, 155)
         ndct_2_4.set_column(x, y, 25)
         
-        idct_img = Image.fromarray(np.uint8(blockIDCT))
+        idct_img = Image.fromarray(np.uint8(block_idct))
         # 
         idct_img.save(out3)
 

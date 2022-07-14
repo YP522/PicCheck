@@ -25,10 +25,10 @@ def get_delta_e_value(c1, c2):
     :param c2: The color to compare to c1
     :return: The delta_E value.
     """
-    Lab_1 = colour.XYZ_to_Lab(c1)
-    Lab_2 = colour.XYZ_to_Lab(c2)
-    RGB = colour.XYZ_to_sRGB(Lab_1 / 100)
-    RGB2 = colour.XYZ_to_sRGB(Lab_2 / 100)
+    lab_1 = colour.XYZ_to_Lab(c1)
+    lab_2 = colour.XYZ_to_Lab(c2)
+    RGB = colour.XYZ_to_sRGB(lab_1 / 100)
+    RGB2 = colour.XYZ_to_sRGB(lab_2 / 100)
     return colour.delta_E(RGB, RGB2, method='CIE 1976')
 
 

@@ -11,14 +11,14 @@ def around_value(value):
     return math.floor(value + 0.5)
 
 
-def clean_list(listOfValues):
+def clean_list(list_of_values):
     """
     This function takes a list of values and returns a list of values
     
-    :param listOfValues: the list of values to be cleaned
-    :return: A list of the first three values in the listOfValues parameter.
+    :param list_of_values: the list of values to be cleaned
+    :return: A list of the first three values in the list_of_values parameter.
     """
-    return [around_value(elem) for elem in listOfValues][0:3]
+    return [around_value(elem) for elem in list_of_values][0:3]
 
 
 def reverse_percentage(percentage):

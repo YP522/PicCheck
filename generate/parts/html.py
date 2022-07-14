@@ -4,7 +4,7 @@ from generate.funcs.formatted import *
 
 def set_open_html_file(title, style):
 
-    openHtmlFile = f'''
+    open_html_file = f'''
     <!-- PCK HTML REPORT -->
     <!DOCTYPE html>
     <html lang="en" dir="ltr">
@@ -21,7 +21,7 @@ def set_open_html_file(title, style):
             </div>
             <div class="page">    
     '''
-    return openHtmlFile
+    return open_html_file
 
 def set_close_html_file():
 
@@ -33,7 +33,7 @@ def set_close_html_file():
 
 def set_profile_of_picture(number, value):
 
-    profileOfPicture = f'''
+    profile_of_picture = f'''
 
                         <div class="text-center">
                             <img src="../data/img{number}.png" alt="A free tool for compare 2 pictures">
@@ -45,22 +45,22 @@ def set_profile_of_picture(number, value):
                         </div>
 
     '''
-    return profileOfPicture
+    return profile_of_picture
 
 def set_start_compare_zone(title):
 
-    startCompareZone = f'''
+    start_compare_zone = f'''
                         <div class="compareZone">
                             <div>
                                 <h2 class="category">{title}</h2>
                                 <ul>
     '''
 
-    return startCompareZone
+    return start_compare_zone
 
 def set_wigdet_list_for_color_col(title, var1, var2, var3):
 
-    WigdetListForColorCol = f'''
+    wigdet_list_for_color_col = f'''
                                         <li>
                                             <div class="row">
                                                 <div class="column middlescreen">
@@ -77,12 +77,12 @@ def set_wigdet_list_for_color_col(title, var1, var2, var3):
                                             </div>
                                         </li>
     '''
-    return WigdetListForColorCol
+    return wigdet_list_for_color_col
 
 
 def set_wigdet_list_for_compare(title, var1):
 
-    WigdetListForCompare = f'''
+    wigdet_list_for_compare = f'''
                                         <li>
                                             <div class="row">
                                                 <div class="column middlescreen">
@@ -99,12 +99,12 @@ def set_wigdet_list_for_compare(title, var1):
                                             </div>
                                         </li>
     '''
-    return WigdetListForCompare
+    return wigdet_list_for_compare
 
 
 def set_wigdet_list_for_compression(title, var1, var2, var3):
 
-    WigdetListForCompression = f'''
+    wigdet_list_for_compression = f'''
                                         <li>
                                             <div class="row">
                                                 <div class="column middlescreen">
@@ -121,5 +121,5 @@ def set_wigdet_list_for_compression(title, var1, var2, var3):
                                             </div>
                                         </li>
     '''
-    return WigdetListForCompression
+    return wigdet_list_for_compression
 
