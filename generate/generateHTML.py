@@ -1,65 +1,65 @@
 from PIL import Image
 
-from generate.funcs.formatted import aroundValue, cleanList, reversePercentage, getPercentageBetween, getColorByPercentage
-from generate.generateCSS import generateDefaultThemes, generateReportCss
-from generate.generateTXT import generateTXT
-from generate.parts.favicon import generateFavIcon
-from generate.parts.html import setWigdetListForColorCol, setWigdetListForCompare, setWigdetListForCompression
-from generate.parts.logo import generateLogo
+from generate.funcs.formatted import around_value, cleanList, reversePercentage, get_percentage_between, get_color_by_percentage
+from generate.generateCSS import generate_default_themes, generate_report_css
+from generate.generateTXT import generate_txt
+from generate.parts.favicon import generate_fav_icon
+from generate.parts.html import set_profile_of_picture, set_wigdet_list_for_color_col, set_wigdet_list_for_compare, set_wigdet_list_for_compression, set_close_html_file, set_open_html_file, set_start_compare_zone
+from generate.parts.logo import generate_logo
 
-from processing.collect import getColorOccurences, getColorAverage,getColorDominante
-from processing.compare import getColorDifferences, getDiff
-from processing.compression import getCompressionLevel
+from processing.collect import get_color_occurences, get_color_average,get_color_dominante
+from processing.compare import get_color_differences, get_diff
+from processing.compression import get_compression_level
 
 from system import utils as u
 
 page_title = "My report"
 
 
-def generateHTML(nor_img1, nor_img2):
+def generate_html(nor_img1, nor_img2):
 
     gra_img1 = Image.open(f"{u.dt_string}/data/gra_img1.png").convert('RGB')
     gra_img2 = Image.open(f"{u.dt_string}/data/gra_img2.png").convert('RGB')
 
     # revoir nomination des variables images
 
-    col_nor_occ = aroundValue(getColorOccurences(nor_img1, nor_img2)[1])
-    col_nor_avg_img_1 = getColorAverage(nor_img1, nor_img2)[0]
-    col_nor_avg_img_2 = getColorAverage(nor_img1, nor_img2)[1]
+    col_nor_occ = around_value(get_color_occurences(nor_img1, nor_img2)[1])
+    col_nor_avg_img_1 = get_color_average(nor_img1, nor_img2)[0]
+    col_nor_avg_img_2 = get_color_average(nor_img1, nor_img2)[1]
     for_col_nor_avg_img_1 = cleanList(col_nor_avg_img_1)
     for_col_nor_avg_img_2 = cleanList(col_nor_avg_img_2)
-    pc_col_avg = getDiff(col_nor_avg_img_1, col_nor_avg_img_2, 0)
-    col_nor_dom_img_1 = cleanList(getColorDominante(nor_img1, nor_img2)[0])
-    col_nor_dom_img_2 = cleanList(getColorDominante(nor_img1, nor_img2)[1])
+    pc_col_avg = get_diff(col_nor_avg_img_1, col_nor_avg_img_2, 0)
+    col_nor_dom_img_1 = cleanList(get_color_dominante(nor_img1, nor_img2)[0])
+    col_nor_dom_img_2 = cleanList(get_color_dominante(nor_img1, nor_img2)[1])
     for_col_nor_dom_img_1 = cleanList(col_nor_dom_img_1)
     for_col_nor_dom_img_2 = cleanList(col_nor_dom_img_2)
-    pc_col_dom = getDiff(col_nor_dom_img_1, col_nor_dom_img_2, 0)
+    pc_col_dom = get_diff(col_nor_dom_img_1, col_nor_dom_img_2, 0)
 
-    col_gra_occ = aroundValue(getColorOccurences(gra_img1, gra_img2)[1])
-    col_gra_avg_img_1 = getColorAverage(gra_img1, gra_img2)[0]
-    col_gra_avg_img_2 = getColorAverage(gra_img1, gra_img2)[1]
+    col_gra_occ = around_value(get_color_occurences(gra_img1, gra_img2)[1])
+    col_gra_avg_img_1 = get_color_average(gra_img1, gra_img2)[0]
+    col_gra_avg_img_2 = get_color_average(gra_img1, gra_img2)[1]
     for_col_gra_avg_img_1 = cleanList(col_gra_avg_img_1)
     for_col_gra_avg_img_2 = cleanList(col_gra_avg_img_2)
-    pc_gra_col_avg = getDiff(col_gra_avg_img_1, col_gra_avg_img_2, 0)
-    col_gra_dom_img_1 = cleanList(getColorDominante(gra_img1, gra_img2)[0])
-    col_gra_dom_img_2 = cleanList(getColorDominante(gra_img1, gra_img2)[1])
+    pc_gra_col_avg = get_diff(col_gra_avg_img_1, col_gra_avg_img_2, 0)
+    col_gra_dom_img_1 = cleanList(get_color_dominante(gra_img1, gra_img2)[0])
+    col_gra_dom_img_2 = cleanList(get_color_dominante(gra_img1, gra_img2)[1])
     for_col_gra_dom_img_1 = cleanList(col_gra_dom_img_1)
     for_col_gra_dom_img_2 = cleanList(col_gra_dom_img_2)
-    pc_gra_col_dom = getDiff(col_gra_dom_img_1, col_gra_dom_img_2, 0)
+    pc_gra_col_dom = get_diff(col_gra_dom_img_1, col_gra_dom_img_2, 0)
 
-    com_nor_dif_img_1 = aroundValue(getColorDifferences(nor_img1, nor_img2)/(nor_img1.width*nor_img1.height)*100)
-    com_nor_dif_img_2 = aroundValue(getColorDifferences(nor_img1, nor_img2)/(nor_img1.width*nor_img1.height)*100)
+    com_nor_dif_img_1 = around_value(get_color_differences(nor_img1, nor_img2)/(nor_img1.width*nor_img1.height)*100)
+    com_nor_dif_img_2 = around_value(get_color_differences(nor_img1, nor_img2)/(nor_img1.width*nor_img1.height)*100)
 
-    com_gra_dif_img_1 = aroundValue(getColorDifferences(gra_img1, gra_img2)/(gra_img1.width*gra_img1.height)*100)
-    com_gra_dif_img_2 = aroundValue(getColorDifferences(gra_img1, gra_img2)/(gra_img1.width*gra_img1.height)*100)
+    com_gra_dif_img_1 = around_value(get_color_differences(gra_img1, gra_img2)/(gra_img1.width*gra_img1.height)*100)
+    com_gra_dif_img_2 = around_value(get_color_differences(gra_img1, gra_img2)/(gra_img1.width*gra_img1.height)*100)
 
-    cmp_nor_lvl_img_1 = aroundValue(getCompressionLevel(nor_img1, "img1"))
-    cmp_nor_lvl_img_2 = aroundValue(getCompressionLevel(nor_img2, "img2"))
+    cmp_nor_lvl_img_1 = around_value(get_compression_level(nor_img1, "img1"))
+    cmp_nor_lvl_img_2 = around_value(get_compression_level(nor_img2, "img2"))
 
-    cmp_gra_lvl_img_1 = aroundValue(getCompressionLevel(gra_img1, "gra_img1"))
-    cmp_gra_lvl_img_2 = aroundValue(getCompressionLevel(gra_img2, "gra_img2"))
+    cmp_gra_lvl_img_1 = around_value(get_compression_level(gra_img1, "gra_img1"))
+    cmp_gra_lvl_img_2 = around_value(get_compression_level(gra_img2, "gra_img2"))
 
-    lvl_img1 = aroundValue(
+    lvl_img1 = around_value(
         col_nor_occ
         + reversePercentage(pc_col_avg)
         + reversePercentage(pc_col_dom)
@@ -68,54 +68,60 @@ def generateHTML(nor_img1, nor_img2):
         + reversePercentage(pc_gra_col_dom)
         + com_nor_dif_img_1
         + com_gra_dif_img_1
-        + aroundValue(reversePercentage(getPercentageBetween(cmp_nor_lvl_img_2, cmp_nor_lvl_img_1)))
-        + aroundValue(reversePercentage(getPercentageBetween(cmp_gra_lvl_img_2, cmp_gra_lvl_img_1)))
+        + around_value(reversePercentage(get_percentage_between(cmp_nor_lvl_img_2, cmp_nor_lvl_img_1)))
+        + around_value(reversePercentage(get_percentage_between(cmp_gra_lvl_img_2, cmp_gra_lvl_img_1)))
         )/10
 
-    lvl_img2 = reversePercentage(aroundValue(lvl_img1))
+    lvl_img2 = reversePercentage(around_value(lvl_img1))
 
     html = f'''
-    <!-- PCK HTML REPORT -->
-    <!DOCTYPE html>
-    <html lang="en" dir="ltr">
-        <head>
-            <meta charset="utf-8">
-            <title>{page_title}</title>
-            <link rel="stylesheet" href="assets/report.css">
-            <link rel="stylesheet" href="assets/themes/Viridis.css">  <!-- edit this line to change report css theme -->
-            <link rel="icon" type="image/png" href="assets/favicon.png" />
-        </head>
-        <body>
-            <div class="header fullscreen">
-                <img src="assets/logo.png" alt="A free tool for compare 2 pictures">
-            </div>
-            <div class="page">
+        {set_open_html_file(page_title,"Viridis")}
                 <div class="row">
                     <div class="column middlescreen">
-                        <div class="text-center">
-                            <img src="../data/img1.png" alt="A free tool for compare 2 pictures">
-                            <h3>IMG 1</h3>
+                    {set_profile_of_picture("1",lvl_img1)}
 
-                            <div class="level l{getColorByPercentage(lvl_img1)}">
-                                <h4>{lvl_img1}%</h4>
-                            </div>
+                        {set_start_compare_zone("ColorCollect")}
+                                <li>
+
+                                    Normal
+
+                                    <ul>
+
+                                        {set_wigdet_list_for_color_col("ColorOccurences","",col_nor_occ,reversePercentage(col_nor_occ))}
+
+                                        {set_wigdet_list_for_color_col("ColorAverage",for_col_nor_avg_img_1,reversePercentage(pc_col_avg),pc_col_avg)}
+
+                                        {set_wigdet_list_for_color_col("ColorDominante",for_col_nor_dom_img_1,reversePercentage(pc_col_dom),pc_col_dom)}
+
+                                    </ul>
+
+                                    <br>
+
+                                <li>
+
+                                    GrayScale
+
+                                    <ul>
+
+                                        {set_wigdet_list_for_color_col("ColorOccurences","",col_gra_occ,reversePercentage(col_gra_occ))}
+
+                                        {set_wigdet_list_for_color_col("ColorAverage",for_col_gra_avg_img_1,reversePercentage(pc_gra_col_avg),pc_gra_col_avg)}
+
+                                        {set_wigdet_list_for_color_col("ColorDominante",for_col_gra_dom_img_1,reversePercentage(pc_gra_col_dom),pc_gra_col_dom)}
+
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
-
-                        <div class="compareZone">
-                            <div>
-                                <h2 class="category">ColorCollect</h2>
-                                <ul>
+                    </div>
+                        {set_start_compare_zone("ColorCompare")}
                                     <li>
 
                                         Normal
 
                                         <ul>
 
-                                            {setWigdetListForColorCol("ColorOccurences","",col_nor_occ,reversePercentage(col_nor_occ))}
-
-                                            {setWigdetListForColorCol("ColorAverage",for_col_nor_avg_img_1,reversePercentage(pc_col_avg),pc_col_avg)}
-
-                                            {setWigdetListForColorCol("ColorDominante",for_col_nor_dom_img_1,reversePercentage(pc_col_dom),pc_col_dom)}
+                                            {set_wigdet_list_for_compare("ColorDifference",com_nor_dif_img_1)}
 
                                         </ul>
 
@@ -127,40 +133,7 @@ def generateHTML(nor_img1, nor_img2):
 
                                         <ul>
 
-                                            {setWigdetListForColorCol("ColorOccurences","",col_gra_occ,reversePercentage(col_gra_occ))}
-
-                                            {setWigdetListForColorCol("ColorAverage",for_col_gra_avg_img_1,reversePercentage(pc_gra_col_avg),pc_gra_col_avg)}
-
-                                            {setWigdetListForColorCol("ColorDominante",for_col_gra_dom_img_1,reversePercentage(pc_gra_col_dom),pc_gra_col_dom)}
-
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="compareZone">
-                            <div>
-                                <h2 class="category">ColorCompare</h2>
-                                <ul>
-                                    <li>
-
-                                        Normal
-
-                                        <ul>
-
-                                            {setWigdetListForCompare("ColorDifference",com_nor_dif_img_1)}
-
-                                        </ul>
-
-                                    <br>
-
-                                    <li>
-
-                                        GrayScale
-
-                                        <ul>
-
-                                            {setWigdetListForCompare("ColorDifference",com_gra_dif_img_1)}
+                                            {set_wigdet_list_for_compare("ColorDifference",com_gra_dif_img_1)}
 
                                         </ul>
 
@@ -169,17 +142,14 @@ def generateHTML(nor_img1, nor_img2):
                             </div>
                         </div>
 
-                        <div class="compareZone">
-                            <div>
-                                <h2 class="category">Compression</h2>
-                                <ul>
+                        {set_start_compare_zone("Compression")}
                                     <li>
 
                                         Normal
 
                                         <ul>
 
-                                            {setWigdetListForCompression("COMPRESSION LEVEL",cmp_nor_lvl_img_1,aroundValue(reversePercentage(getPercentageBetween(cmp_nor_lvl_img_2,cmp_nor_lvl_img_1))),aroundValue(getPercentageBetween(cmp_nor_lvl_img_2,cmp_nor_lvl_img_1)))}
+                                            {set_wigdet_list_for_compression("COMPRESSION LEVEL",cmp_nor_lvl_img_1,around_value(reversePercentage(get_percentage_between(cmp_nor_lvl_img_2,cmp_nor_lvl_img_1))),around_value(get_percentage_between(cmp_nor_lvl_img_2,cmp_nor_lvl_img_1)))}
 
                                         </ul>
 
@@ -192,7 +162,7 @@ def generateHTML(nor_img1, nor_img2):
 
                                         <ul>
 
-                                            {setWigdetListForCompression("COMPRESSION LEVEL",cmp_gra_lvl_img_1,aroundValue(reversePercentage(getPercentageBetween(cmp_gra_lvl_img_2,cmp_gra_lvl_img_1))),aroundValue(getPercentageBetween(cmp_gra_lvl_img_2,cmp_gra_lvl_img_1)))}
+                                            {set_wigdet_list_for_compression("COMPRESSION LEVEL",cmp_gra_lvl_img_1,around_value(reversePercentage(get_percentage_between(cmp_gra_lvl_img_2,cmp_gra_lvl_img_1))),around_value(get_percentage_between(cmp_gra_lvl_img_2,cmp_gra_lvl_img_1)))}
 
                                         </ul>
 
@@ -202,18 +172,9 @@ def generateHTML(nor_img1, nor_img2):
                         </div>
                     </div>
                     <div class="column middlescreen">
-                        <div class="text-center">
-                            <img src="../data/img2.png" alt="A free tool for compare 2 pictures">
-                            <h3>IMG 2</h3>
-                            <div class="level l{getColorByPercentage(lvl_img2)}">
-                                <h4>{lvl_img2}%</h4>
-                            </div>
-                        </div>
+                        {set_profile_of_picture("2",lvl_img2)}
 
-                        <div class="compareZone">
-                            <div>
-                                <h2 class="category">ColorCollect</h2>
-                                <ul>
+                        {set_start_compare_zone("ColorCollect")}
                                     <li>
 
                                         Normal
@@ -221,11 +182,11 @@ def generateHTML(nor_img1, nor_img2):
                                         <ul>
 
 
-                                            {setWigdetListForColorCol("ColorOccurences","",col_nor_occ,reversePercentage(col_nor_occ))}
+                                            {set_wigdet_list_for_color_col("ColorOccurences","",col_nor_occ,reversePercentage(col_nor_occ))}
 
-                                            {setWigdetListForColorCol("ColorAverage",for_col_nor_avg_img_2,reversePercentage(pc_col_avg),pc_col_avg)}
+                                            {set_wigdet_list_for_color_col("ColorAverage",for_col_nor_avg_img_2,reversePercentage(pc_col_avg),pc_col_avg)}
 
-                                            {setWigdetListForColorCol("ColorDominante",for_col_nor_dom_img_2,reversePercentage(pc_col_dom),pc_col_dom)}
+                                            {set_wigdet_list_for_color_col("ColorDominante",for_col_nor_dom_img_2,reversePercentage(pc_col_dom),pc_col_dom)}
 
 
                                         </ul>
@@ -239,28 +200,25 @@ def generateHTML(nor_img1, nor_img2):
 
                                         <ul>
 
-                                            {setWigdetListForColorCol("ColorOccurences","",col_gra_occ,reversePercentage(col_gra_occ))}
+                                            {set_wigdet_list_for_color_col("ColorOccurences","",col_gra_occ,reversePercentage(col_gra_occ))}
 
-                                            {setWigdetListForColorCol("ColorAverage",for_col_gra_avg_img_2,reversePercentage(pc_gra_col_avg),pc_gra_col_avg)}
+                                            {set_wigdet_list_for_color_col("ColorAverage",for_col_gra_avg_img_2,reversePercentage(pc_gra_col_avg),pc_gra_col_avg)}
 
-                                            {setWigdetListForColorCol("ColorDominante",for_col_gra_dom_img_2,reversePercentage(pc_gra_col_dom),pc_gra_col_dom)}
+                                            {set_wigdet_list_for_color_col("ColorDominante",for_col_gra_dom_img_2,reversePercentage(pc_gra_col_dom),pc_gra_col_dom)}
 
                                         </ul>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="compareZone">
-                            <div>
-                                <h2 class="category">ColorCompare</h2>
-                                <ul>
+                        {set_start_compare_zone("ColorCompare")}
                                     <li>
 
                                         Normal
 
                                         <ul>
 
-                                            {setWigdetListForCompare("ColorDifference",com_nor_dif_img_2)}
+                                            {set_wigdet_list_for_compare("ColorDifference",com_nor_dif_img_2)}
 
                                         </ul>
 
@@ -273,7 +231,7 @@ def generateHTML(nor_img1, nor_img2):
 
                                         <ul>
 
-                                            {setWigdetListForCompare("ColorDifference",com_gra_dif_img_2)}
+                                            {set_wigdet_list_for_compare("ColorDifference",com_gra_dif_img_2)}
 
                                         </ul>
 
@@ -282,17 +240,14 @@ def generateHTML(nor_img1, nor_img2):
                             </div>
                         </div>
 
-                        <div class="compareZone">
-                            <div>
-                                <h2 class="category">Compression</h2>
-                                <ul>
+                        {set_start_compare_zone("Compression")}
                                     <li>
 
                                         Normal
 
                                         <ul>
 
-                                            {setWigdetListForCompression("COMPRESSION LEVEL", cmp_nor_lvl_img_2, aroundValue(reversePercentage(getPercentageBetween(cmp_nor_lvl_img_2, cmp_nor_lvl_img_1))), aroundValue(getPercentageBetween(cmp_nor_lvl_img_2, cmp_nor_lvl_img_1)))}
+                                            {set_wigdet_list_for_compression("COMPRESSION LEVEL", cmp_nor_lvl_img_2, around_value(reversePercentage(get_percentage_between(cmp_nor_lvl_img_2, cmp_nor_lvl_img_1))), around_value(get_percentage_between(cmp_nor_lvl_img_2, cmp_nor_lvl_img_1)))}
 
                                         </ul>
 
@@ -304,7 +259,7 @@ def generateHTML(nor_img1, nor_img2):
 
                                         <ul>
 
-                                            {setWigdetListForCompression("COMPRESSION LEVEL",cmp_gra_lvl_img_2,aroundValue(reversePercentage(getPercentageBetween(cmp_gra_lvl_img_2,cmp_gra_lvl_img_1))),aroundValue(getPercentageBetween(cmp_gra_lvl_img_2,cmp_gra_lvl_img_1)))}
+                                            {set_wigdet_list_for_compression("COMPRESSION LEVEL",cmp_gra_lvl_img_2,around_value(reversePercentage(get_percentage_between(cmp_gra_lvl_img_2,cmp_gra_lvl_img_1))),around_value(get_percentage_between(cmp_gra_lvl_img_2,cmp_gra_lvl_img_1)))}
 
                                         </ul>
 
@@ -316,15 +271,13 @@ def generateHTML(nor_img1, nor_img2):
                     </div>
 
                 </div>
-            </div>
-        </body>
-    </html>
+         {set_close_html_file()}
 
     '''
 
     with open(u.dt_string+'/report/report.html', 'w') as f:
         f.write(html)
-    generateFavIcon(16, tuple(for_col_nor_avg_img_2), tuple(for_col_nor_avg_img_1))
-    generateLogo()
-    generateReportCss()
-    generateDefaultThemes()
+    generate_fav_icon(16, tuple(for_col_nor_avg_img_2), tuple(for_col_nor_avg_img_1))
+    generate_logo()
+    generate_report_css()
+    generate_default_themes()

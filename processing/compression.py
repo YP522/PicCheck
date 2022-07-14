@@ -31,7 +31,7 @@ wrap_format_1 = NOR_DCT_1.add_format({'text_wrap': True,'border': True})
 wrap_format_2 = NOR_DCT_2.add_format({'text_wrap': True,'border': True})
 
 
-def getCompressionLevel(img, imgFile):
+def get_compression_level(img, imgFile):
     """
     Given an image and its file name, return the compression level
     
@@ -85,7 +85,7 @@ def MSE(original, compressed):
     return mse
     
 
-def formatToGridWithCommas(matrix):
+def format_to_grid_with_commas(matrix):
     """
     Given a matrix, format it to a string with commas between the numbers
     
@@ -95,7 +95,7 @@ def formatToGridWithCommas(matrix):
     return np.array2string(np.int32(matrix), separator=', ')
 
 
-def dec_DCT(matrix):
+def dec_dct(matrix):
     """
     Convert a matrix of integers to floats, perform the DCT on the matrix, then convert the result back
     to integers
@@ -109,9 +109,9 @@ def dec_DCT(matrix):
     return np.int32(dst)
 
 
-def dec_InverseDCT(matrix):
+def dec_inverse_dct(matrix):
     """
-    # The function dec_InverseDCT() is the inverse of the function dec_DCT(). It takes a string
+    # The function dec_inverse_dct() is the inverse of the function dec_dct(). It takes a string
     representation of a matrix as input and returns a matrix representation of the inverse DCT
     
     :param matrix: The matrix to be processed
@@ -154,7 +154,7 @@ def tile(img, d, imgName):
         img.crop(box).save(out)
 
 
-def writeBlocInCell(img,img2):
+def write_bloc_in_cell(img,img2):
     """
     This procedure is used to set DCT data in cells and save IDCT Tiles in folder. 
 
@@ -178,13 +178,13 @@ def writeBlocInCell(img,img2):
         arr=np.array(img8)
         block=arr.tolist()
 
-        ndct_1_1.write(x, y, formatToGridWithCommas(block), wrap_format_1)
+        ndct_1_1.write(x, y, format_to_grid_with_commas(block), wrap_format_1)
         ndct_1_1.set_row(x, 155)
         ndct_1_1.set_column(x, y, 25)
 
         # 2 - DCT
-        blockDCT = dec_DCT(str(block))
-        ndct_1_2.write(x, y, formatToGridWithCommas(blockDCT), wrap_format_1)
+        blockDCT = dec_dct(str(block))
+        ndct_1_2.write(x, y, format_to_grid_with_commas(blockDCT), wrap_format_1)
         ndct_1_2.set_row(x, 155)
         ndct_1_2.set_column(x, y, 25)        
 
@@ -199,9 +199,9 @@ def writeBlocInCell(img,img2):
 
 
         # 4 - Inverse DCT
-        blockIDCT=(dec_InverseDCT(formatToGridWithCommas(blockDCT)))
+        blockIDCT=(dec_inverse_dct(format_to_grid_with_commas(blockDCT)))
 
-        ndct_1_4.write(x, y, formatToGridWithCommas(blockIDCT), wrap_format_1)
+        ndct_1_4.write(x, y, format_to_grid_with_commas(blockIDCT), wrap_format_1)
         ndct_1_4.set_row(x, 155)
         ndct_1_4.set_column(x, y, 25)
         
@@ -218,15 +218,15 @@ def writeBlocInCell(img,img2):
         arr2=np.array(img__v2)
         block_v2=arr2.tolist()
 
-        ndct_2_1.write(x,y,formatToGridWithCommas(block_v2),wrap_format_2)
+        ndct_2_1.write(x,y,format_to_grid_with_commas(block_v2),wrap_format_2)
         ndct_2_1.set_row(x, 155)
         ndct_2_1.set_column(x,y, 25)
 
         # 2 - DCT
-        blockDCT2 = dec_DCT(str(block_v2))
-        # print(formatToGridWithCommas(dec_DCT(str(block_v2))))
+        blockDCT2 = dec_dct(str(block_v2))
+        # print(format_to_grid_with_commas(dec_dct(str(block_v2))))
               
-        ndct_2_2.write(x, y, formatToGridWithCommas(blockDCT2), wrap_format_1) 
+        ndct_2_2.write(x, y, format_to_grid_with_commas(blockDCT2), wrap_format_1) 
         ndct_2_2.set_row(x, 155)
         ndct_2_2.set_column(x, y, 25)
 
@@ -240,9 +240,9 @@ def writeBlocInCell(img,img2):
         ndct_2_3.set_column(x,y, 25)        
 
         # 4 - Inverse DCT
-        blockIDCT_v2=(dec_InverseDCT(formatToGridWithCommas(blockDCT2)))
+        blockIDCT_v2=(dec_inverse_dct(format_to_grid_with_commas(blockDCT2)))
         
-        ndct_2_4.write(x, y, formatToGridWithCommas(blockIDCT_v2), wrap_format_2)
+        ndct_2_4.write(x, y, format_to_grid_with_commas(blockIDCT_v2), wrap_format_2)
         ndct_2_4.set_row(x, 155)
         ndct_2_4.set_column(x, y, 25)
         

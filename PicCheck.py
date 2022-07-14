@@ -51,7 +51,7 @@ def dialog():
     var = showinfo("Success !" , "Success report ! Go to the output repertory")
     window.destroy()
 
-def startProgram():
+def start_program():
 
     # show_pb(window)
     window.title(f'PickCheck v{u.version} Executable | Still running, please wait...')
@@ -134,7 +134,7 @@ button_1 = Button(
     image=button_image_1,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda:startProgram(),
+    command=lambda:start_program(),
     relief="flat"
 )
 button_1.place(

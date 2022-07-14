@@ -19,7 +19,7 @@ import difflib
 #####################################################################################################################################
 
 
-def getPixelOcc(image):
+def get_pixel_occ(image):
     """
     Given an image, return a list of tuples of the form (pixel, number of occurrences)
     
@@ -33,7 +33,7 @@ def getPixelOcc(image):
         return Counter(pixels).most_common()
 
 
-def getPixelColor(image, mode, x, y):
+def get_pixel_color(image, mode, x, y):
     """
     Get the pixel color at a given coordinate
     
@@ -58,7 +58,7 @@ def getPixelColor(image, mode, x, y):
         return '#%02x%02x%02x' % image_rgb.getpixel((y, x))
 
 
-def setOccurences(image, index, sheet):
+def set_occurences(image, index, sheet):
     """
     This function takes in an image and an index and writes the occurences of that index to the excel
     sheet
@@ -67,11 +67,11 @@ def setOccurences(image, index, sheet):
     :param index: The index of the pixel in the list of pixels
     :param sheet: the sheet to write to
     """
-    sheet.write(index, 0, (str(getPixelOcc(image)[index][0])))
-    sheet.write(index, 1, getPixelOcc(image)[index][1])
+    sheet.write(index, 0, (str(get_pixel_occ(image)[index][0])))
+    sheet.write(index, 1, get_pixel_occ(image)[index][1])
 
 
-def getColorOccurences(image1, image2):
+def get_color_occurences(image1, image2):
     """
     Given two images, return the ratio of the number of pixels that are the same in both images
     
@@ -88,7 +88,7 @@ def getColorOccurences(image1, image2):
     return sm.ratio(), sm.ratio()*100
 
 
-def getColorAverage(image1, image2):
+def get_color_average(image1, image2):
     """
     This function takes in two images and returns the average color of each image
     
@@ -102,7 +102,7 @@ def getColorAverage(image1, image2):
     return avg1.mean, avg2.mean
 
 
-def getColorDominante(image1, image2):
+def get_color_dominante(image1, image2):
     """
     Given two images, the function returns the dominant color of the images
     

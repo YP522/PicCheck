@@ -17,7 +17,7 @@ from PIL import Image, ImageDraw
 # For XLSX report
 
 
-def getDELTA_E_VALUE(c1, c2):
+def get_delta_e_value(c1, c2):
     """
     This function takes two colours and returns the delta E value between them
     
@@ -32,7 +32,7 @@ def getDELTA_E_VALUE(c1, c2):
     return colour.delta_E(RGB, RGB2, method='CIE 1976')
 
 
-def getDiff(c1, c2, mode):
+def get_diff(c1, c2, mode):
     """
     The function takes in two RGB values and returns the difference between the two values.
     
@@ -59,7 +59,7 @@ def getDiff(c1, c2, mode):
     return abs(perc1 - perc2);
 
 
-def getGap(c1, c2):
+def get_gap(c1, c2):
     """
     Given two colors, return the gap between them
     
@@ -78,7 +78,7 @@ def getGap(c1, c2):
     return r, g, b;
 
 
-def getDifferences(sheet, cell_x, cell_y, i1, i2, format1, format2):
+def get_differences(sheet, cell_x, cell_y, i1, i2, format1, format2):
     """
     Write the difference between two numbers to a cell in a spreadsheet
     
@@ -90,15 +90,15 @@ def getDifferences(sheet, cell_x, cell_y, i1, i2, format1, format2):
     :param format1: format for values that are less than 1% different
     :param format2: format for values that are greater than 0.01 but less than 1
     """
-    if getDiff(i1, i2, 1) == 0:
-        sheet.write(cell_x, cell_y, getDiff(i1, i2, 1), format1)
-    elif getDiff(i1, i2, 1) >= 0.01 and getDiff(i1, i2, 1) < 1:
-        sheet.write(cell_x, cell_y, getDiff(i1, i2, 1), format2)
+    if get_diff(i1, i2, 1) == 0:
+        sheet.write(cell_x, cell_y, get_diff(i1, i2, 1), format1)
+    elif get_diff(i1, i2, 1) >= 0.01 and get_diff(i1, i2, 1) < 1:
+        sheet.write(cell_x, cell_y, get_diff(i1, i2, 1), format2)
     else:
-        sheet.write(cell_x, cell_y, getDiff(i1, i2, 1))
+        sheet.write(cell_x, cell_y, get_diff(i1, i2, 1))
 
 
-def getColorDifferences(image1, image2,):
+def get_color_differences(image1, image2,):
     """
     Given two images, return the number of pixels that are the same in both images
     
@@ -115,12 +115,12 @@ def getColorDifferences(image1, image2,):
             i1 = image1.getpixel((index_y, index_x))
             i2 = image2.getpixel((index_y, index_x))
 
-            if getDiff(i1, i2, 1) == 0:
+            if get_diff(i1, i2, 1) == 0:
                 matched_pixels.append(0)
     return len(matched_pixels)
 
 
-def saveMatchedPixels(image1, image2, mode):
+def save_matched_pixels(image1, image2, mode):
     """
     Given two images, this function will create a new image where the pixels of the first image are
     retained if and only if the corresponding pixels in the second image are the same
@@ -139,6 +139,6 @@ def saveMatchedPixels(image1, image2, mode):
             i1 = image1.getpixel((index_y, index_x))
             i2 = image2.getpixel((index_y, index_x))
 
-            if getDiff(i1, i2, mode) == 0:
+            if get_diff(i1, i2, mode) == 0:
                 img.putpixel((index_y, index_x), i1)            
     return img

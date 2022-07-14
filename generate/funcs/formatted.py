@@ -1,7 +1,7 @@
 import math
 
 
-def aroundValue(value):
+def around_value(value):
     """
     Returns the floor of the input value
     
@@ -18,7 +18,7 @@ def cleanList(listOfValues):
     :param listOfValues: the list of values to be cleaned
     :return: A list of the first three values in the listOfValues parameter.
     """
-    return [aroundValue(elem) for elem in listOfValues][0:3]
+    return [around_value(elem) for elem in listOfValues][0:3]
 
 
 def reversePercentage(percentage):
@@ -31,7 +31,7 @@ def reversePercentage(percentage):
     return 100-percentage
 
 
-def getPercentageBetween(value1, value2):
+def get_percentage_between(value1, value2):
     """
     Returns the percentage between two values
     
@@ -42,7 +42,7 @@ def getPercentageBetween(value1, value2):
     return ((value2 - value1) / value1 * 100)
 
 
-def getColorByPercentage(percentage):
+def get_color_by_percentage(percentage):
     """
     Given a percentage, return a color
     
@@ -63,7 +63,7 @@ def getColorByPercentage(percentage):
         return ""
 
 
-def setBackgroundByContastColor(color):
+def set_Background_By_Contast_Color(color):
     """
     This function takes a color and returns a string based on the color's contrast
     
