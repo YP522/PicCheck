@@ -24,7 +24,7 @@ import os
 #####################################################################################################################################
 
 
-def checkFile(path):
+def check_file(path):
     """
     Check if the path is a file or a directory
     
@@ -40,7 +40,7 @@ def checkFile(path):
             print('The location doesn\'t exist')
 
 
-def getIMG(file):
+def get_img(file):
     """
     This function takes a file path as an argument and returns an image object
     
@@ -57,7 +57,7 @@ def scan(img):
     :param img: The image to be scanned
     :return: The function scan returns an array of the image.
     """
-    return np.array(getIMG(img))
+    return np.array(get_img(img))
 
 
 def run(img1, img2):
@@ -65,10 +65,10 @@ def run(img1, img2):
     :param img1: The first image to compare
     :param img2: The image to compare with
     """
-    g_i1 = getIMG(img1).convert('RGBA');
-    g_i2 = getIMG(img2).convert('RGBA');
+    g_i1 = get_img(img1).convert('RGBA');
+    g_i2 = get_img(img2).convert('RGBA');
 
-    if((checkFile(img1) and checkFile(img2)) != True):
+    if((check_file(img1) and check_file(img2)) != True):
         u.log(f"{u.bad} {u.errors[0]}")
     else:
         u.log(f"{u.good} Files exists !")

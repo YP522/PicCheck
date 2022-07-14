@@ -11,7 +11,7 @@ def around_value(value):
     return math.floor(value + 0.5)
 
 
-def cleanList(listOfValues):
+def clean_list(listOfValues):
     """
     This function takes a list of values and returns a list of values
     
@@ -21,7 +21,7 @@ def cleanList(listOfValues):
     return [around_value(elem) for elem in listOfValues][0:3]
 
 
-def reversePercentage(percentage):
+def reverse_percentage(percentage):
     """
     This functions get inverse of the input percentage
 
@@ -63,7 +63,7 @@ def get_color_by_percentage(percentage):
         return ""
 
 
-def set_Background_By_Contast_Color(color):
+def set_background_by_contast_color(color):
     """
     This function takes a color and returns a string based on the color's contrast
     

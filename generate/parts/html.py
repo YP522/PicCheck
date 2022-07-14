@@ -68,7 +68,7 @@ def set_wigdet_list_for_color_col(title, var1, var2, var3):
                                                 </div>
                                                 <div class="column middlescreen">
                                                     <div class="row">
-                                                        <div class="column middlescreen tag {set_Background_By_Contast_Color(tuple(var1))}" style="color:rgb{tuple(var1)}">{var1}</div>
+                                                        <div class="column middlescreen tag {set_background_by_contast_color(tuple(var1))}" style="color:rgb{tuple(var1)}">{var1}</div>
                                                         <div class="column middlescreen tag {get_color_by_percentage(var2)}">{var2} %</div>
                                                         <div class="column middlescreen tag {get_color_by_percentage(var3)}">{var3} %</div>
                                                     </div>
@@ -92,7 +92,7 @@ def set_wigdet_list_for_compare(title, var1):
                                                     <div class="row">
                                                         <div class="column middlescreen tag "></div>
                                                         <div class="column middlescreen tag {get_color_by_percentage(var1)}">{var1}%</div>
-                                                        <div class="column middlescreen tag {get_color_by_percentage(reversePercentage(var1))}">{reversePercentage(var1)}%</div>
+                                                        <div class="column middlescreen tag {get_color_by_percentage(reverse_percentage(var1))}">{reverse_percentage(var1)}%</div>
                                                     </div>
                                                 </div>
 
