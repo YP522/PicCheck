@@ -51,7 +51,7 @@ def launch_collect(image1, image2):
             i_pxl_hexa1_n = get_pixel_color(image1, 'hexa', index_x, index_y)
             i_pxl_hexa2_n = get_pixel_color(image2, 'hexa', index_x, index_y)
 
-            iPxl_hexa1_g = get_pixel_color(la_image1, 'hexa', index_x, index_y)
+            i_pxl_hexa1_g = get_pixel_color(la_image1, 'hexa', index_x, index_y)
             i_pxl_hexa2_g = get_pixel_color(la_image2, 'hexa', index_x, index_y)
 
         # RGB extraction for index
@@ -72,7 +72,7 @@ def launch_collect(image1, image2):
             ncol_1.write(index_x, index_y, str(i_pxl_hexa1_n))
             ncol_2.write(index_x, index_y, str(i_pxl_hexa2_n))
 
-            gcol_1.write(index_x, index_y, iPxl_hexa1_g)
+            gcol_1.write(index_x, index_y, i_pxl_hexa1_g)
             gcol_2.write(index_x, index_y, i_pxl_hexa2_g)
 
         # RGB insertion for index
