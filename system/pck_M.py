@@ -48,46 +48,46 @@ def launch_collect(image1, image2):
         for index_y in range(width):
 
         # HEXA extraction for index
-            iPxl_hexa1_n = get_pixel_color(image1, 'hexa', index_x, index_y)
-            iPxl_hexa2_n = get_pixel_color(image2, 'hexa', index_x, index_y)
+            i_pxl_hexa1_n = get_pixel_color(image1, 'hexa', index_x, index_y)
+            i_pxl_hexa2_n = get_pixel_color(image2, 'hexa', index_x, index_y)
 
             iPxl_hexa1_g = get_pixel_color(la_image1, 'hexa', index_x, index_y)
-            iPxl_hexa2_g = get_pixel_color(la_image2, 'hexa', index_x, index_y)
+            i_pxl_hexa2_g = get_pixel_color(la_image2, 'hexa', index_x, index_y)
 
         # RGB extraction for index
-            iPxl_rgb1_n = get_pixel_color(image1, 'rgb', index_x, index_y)
-            iPxl_rgb2_n = get_pixel_color(image2, 'rgb', index_x, index_y)
+            i_pxl_rgb1_n = get_pixel_color(image1, 'rgb', index_x, index_y)
+            i_pxl_rgb2_n = get_pixel_color(image2, 'rgb', index_x, index_y)
 
-            iPxl_rgb1_g = get_pixel_color(la_image1, 'rgb', index_x, index_y)
-            iPxl_rgb2_g = get_pixel_color(la_image2, 'rgb', index_x, index_y)
+            i_pxl_rgb1_g = get_pixel_color(la_image1, 'rgb', index_x, index_y)
+            i_pxl_rgb2_g = get_pixel_color(la_image2, 'rgb', index_x, index_y)
 
         # RGBA extraction for index
-            iPxl_rgba1_n = get_pixel_color(image1, 'rgba', index_x, index_y)
-            iPxl_rgba2_n = get_pixel_color(image2, 'rgba', index_x, index_y)
+            i_pxl_rgba1_n = get_pixel_color(image1, 'rgba', index_x, index_y)
+            i_pxl_rgba2_n = get_pixel_color(image2, 'rgba', index_x, index_y)
 
-            iPxl_rgba1_g = get_pixel_color(la_image1, 'rgba', index_x, index_y)
-            iPxl_rgba2_g = get_pixel_color(la_image2, 'rgba', index_x, index_y)
+            i_pxl_rgba1_g = get_pixel_color(la_image1, 'rgba', index_x, index_y)
+            i_pxl_rgba2_g = get_pixel_color(la_image2, 'rgba', index_x, index_y)
 
         # HEXA insertion for index
-            ncol_1.write(index_x, index_y, str(iPxl_hexa1_n))
-            ncol_2.write(index_x, index_y, str(iPxl_hexa2_n))
+            ncol_1.write(index_x, index_y, str(i_pxl_hexa1_n))
+            ncol_2.write(index_x, index_y, str(i_pxl_hexa2_n))
 
             gcol_1.write(index_x, index_y, iPxl_hexa1_g)
-            gcol_2.write(index_x, index_y, iPxl_hexa2_g)
+            gcol_2.write(index_x, index_y, i_pxl_hexa2_g)
 
         # RGB insertion for index
-            ncol_3.write(index_x, index_y, str(iPxl_rgb1_n))
-            ncol_4.write(index_x, index_y, str(iPxl_rgb2_n))
+            ncol_3.write(index_x, index_y, str(i_pxl_rgb1_n))
+            ncol_4.write(index_x, index_y, str(i_pxl_rgb2_n))
 
-            gcol_3.write(index_x, index_y, str(iPxl_rgb1_g))
-            gcol_4.write(index_x, index_y, str(iPxl_rgb2_g))
+            gcol_3.write(index_x, index_y, str(i_pxl_rgb1_g))
+            gcol_4.write(index_x, index_y, str(i_pxl_rgb2_g))
 
         # RGBA insertion for index
-            ncol_5.write(index_x, index_y, str(iPxl_rgba1_n))
-            ncol_6.write(index_x, index_y, str(iPxl_rgba2_n))
+            ncol_5.write(index_x, index_y, str(i_pxl_rgba1_n))
+            ncol_6.write(index_x, index_y, str(i_pxl_rgba2_n))
 
-            gcol_5.write(index_x, index_y, str(iPxl_rgba1_g))
-            gcol_6.write(index_x, index_y, str(iPxl_rgba2_g))
+            gcol_5.write(index_x, index_y, str(i_pxl_rgba1_g))
+            gcol_6.write(index_x, index_y, str(i_pxl_rgba2_g))
 
     for index_1 in range(len(get_pixel_occ(image1))):
         set_occurences(image1, index_1, ncol_7)
