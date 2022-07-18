@@ -1,4 +1,4 @@
-from processing.compression import MSE, PSNR, SSIM
+from processing.compression import get_mse, get_psnr, get_ssim
 from system import utils as u
 
 import numpy as np
@@ -15,8 +15,8 @@ def generate_txt(image1,image2):
     save_in_logs(f"ENTROPY IM1 : {image1.entropy()} ENTROPY IM2 : {image2.entropy()}")
     save_in_logs(f"EXIF IM1 : {image1.getexif()} EXIF IM2 : {image2.getexif()}")
     save_in_logs(f"\n\n")
-    save_in_logs(f"PSNR : {PSNR(np.array(image1),np.array(image2))}")
-    save_in_logs(f"SSIM : {SSIM(np.array(image1),np.array(image2))}")
-    save_in_logs(f"MSE  : {MSE(np.array(image1),np.array(image2))}")
+    save_in_logs(f"PSNR : {get_psnr(np.array(image1),np.array(image2))}")
+    save_in_logs(f"SSIM : {get_ssim(np.array(image1),np.array(image2))}")
+    save_in_logs(f"MSE  : {get_mse(np.array(image1),np.array(image2))}")
     save_in_logs(f"\n\n")
 

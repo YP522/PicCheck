@@ -45,7 +45,7 @@ def get_compression_level(img, img_file):
     return quality;
 
 
-def PSNR(original, compressed):
+def get_psnr(original, compressed):
     """
     Compute the PSNR of the compressed image and the original image
     
@@ -62,7 +62,7 @@ def PSNR(original, compressed):
     return psnr
 
 
-def SSIM(original, compressed):
+def get_ssim(original, compressed):
     """
     Compute the SSIM of the compressed image and the original image
     
@@ -73,7 +73,7 @@ def SSIM(original, compressed):
     return skm.structural_similarity(original, compressed, channel_axis=2)
 
 
-def MSE(original, compressed):
+def get_mse(original, compressed):
     """
     Compute the MSE of the compressed image and the original image
     
@@ -124,7 +124,7 @@ def dec_inverse_dct(matrix):
     return np.int32(block)
 
 
-def upSampling(array):
+def up_sampling(array):
     """
     Given a 2D array, return a new 2D array with the array values repeated twice along the first axis
     (axis=0) and twice along the second axis (axis=1)
