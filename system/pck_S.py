@@ -12,11 +12,13 @@
 #                                                               System                                                              #
 #####################################################################################################################################
 from generate.generateFolders import create_folders
+from generate.generateTXT import generate_txt
+from generate.generateHTML import generate_html
 from processing.compression import write_bloc_in_cell
 
 from PIL import Image
+from system.pck_M import launch_collect, launch_compare, launch_compress, NOR_DCT_1, NOR_DCT_2
 
-from system.pck_M import *
 from system import utils as u
 
 import numpy as np

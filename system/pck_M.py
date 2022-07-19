@@ -12,11 +12,9 @@
 #                                                             Machinery                                                             #
 #####################################################################################################################################
 from generate.generateXLSX import *
-from generate.generateHTML import *
-from generate.generateTXT import *
 
-from processing.collect import *
-from processing.compare import *
+from processing.collect import get_pixel_color, get_pixel_occ, set_occurences
+from processing.compare import save_matched_pixels, get_differences, get_diff, get_delta_e_value, get_gap
 from processing.compression import tile
 
 from system import utils as u

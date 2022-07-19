@@ -18,10 +18,9 @@ from PIL import Image
 
 import cv2
 import numpy as np
-import skimage
 import skimage.metrics as skm
 import system.utils as u
-from generate.generateXLSX import *
+from generate.generateXLSX import NOR_DCT_1, NOR_DCT_2, ndct_1_1, ndct_1_2, ndct_1_3, ndct_1_4, ndct_2_1, ndct_2_2, ndct_2_3, ndct_2_4
 
 #####################################################################################################################################
 
