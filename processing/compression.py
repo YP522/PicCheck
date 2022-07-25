@@ -18,14 +18,10 @@ from PIL import Image
 
 import cv2
 import numpy as np
-<<<<<<< Updated upstream
-import skimage
-=======
 import skimage.metrics as skm
 from tqdm import tqdm
->>>>>>> Stashed changes
 import system.utils as u
-from generate.generateXLSX import *
+from generate.generateXLSX import NOR_DCT_1, NOR_DCT_2, ndct_1_1, ndct_1_2, ndct_1_3, ndct_1_4, ndct_2_1, ndct_2_2, ndct_2_3, ndct_2_4
 
 #####################################################################################################################################
 
@@ -35,21 +31,21 @@ wrap_format_1 = NOR_DCT_1.add_format({'text_wrap': True,'border': True})
 wrap_format_2 = NOR_DCT_2.add_format({'text_wrap': True,'border': True})
 
 
-def getCompressionLevel(img, imgFile):
+def get_compression_level(img, img_file):
     """
     Given an image and its file name, return the compression level
     
     :param img: the image object
-    :param imgFile: The name of the image file
+    :param img_file: The name of the image file
     :return: The quality of the image.
     """
 
-    path = f"{u.dt_string}/data/{imgFile}.png"
+    path = f"{u.dt_string}/data/{img_file}.png"
     quality = (101-((img.width*img.height)*3)/(Path(path).stat().st_size))
     return quality;
 
 
-def PSNR(original, compressed):
+def get_psnr(original, compressed):
     """
     Compute the PSNR of the compressed image and the original image
     
@@ -66,7 +62,7 @@ def PSNR(original, compressed):
     return psnr
 
 
-def SSIM(original, compressed):
+def get_ssim(original, compressed):
     """
     Compute the SSIM of the compressed image and the original image
     
@@ -74,10 +70,10 @@ def SSIM(original, compressed):
     :param compressed: The compressed image
     :return: the SSIM value for the two images.
     """
-    return skimage.metrics.structural_similarity(original, compressed, channel_axis=2)
+    return skm.structural_similarity(original, compressed, channel_axis=2)
 
 
-def MSE(original, compressed):
+def get_mse(original, compressed):
     """
     Compute the MSE of the compressed image and the original image
     
@@ -89,7 +85,7 @@ def MSE(original, compressed):
     return mse
     
 
-def formatToGridWithCommas(matrix):
+def format_to_grid_with_commas(matrix):
     """
     Given a matrix, format it to a string with commas between the numbers
     
@@ -99,7 +95,7 @@ def formatToGridWithCommas(matrix):
     return np.array2string(np.int32(matrix), separator=', ')
 
 
-def dec_DCT(matrix):
+def dec_dct(matrix):
     """
     Convert a matrix of integers to floats, perform the DCT on the matrix, then convert the result back
     to integers
@@ -113,9 +109,9 @@ def dec_DCT(matrix):
     return np.int32(dst)
 
 
-def dec_InverseDCT(matrix):
+def dec_inverse_dct(matrix):
     """
-    # The function dec_InverseDCT() is the inverse of the function dec_DCT(). It takes a string
+    # The function dec_inverse_dct() is the inverse of the function dec_dct(). It takes a string
     representation of a matrix as input and returns a matrix representation of the inverse DCT
     
     :param matrix: The matrix to be processed
@@ -128,7 +124,7 @@ def dec_InverseDCT(matrix):
     return np.int32(block)
 
 
-def upSampling(array):
+def up_sampling(array):
     """
     Given a 2D array, return a new 2D array with the array values repeated twice along the first axis
     (axis=0) and twice along the second axis (axis=1)
@@ -139,13 +135,13 @@ def upSampling(array):
     return np.array(array.repeat(2, axis=0).repeat(2, axis=1))
 
 
-def tile(img, d, imgName):
+def tile(img, d, img_name):
     """
     This function is used to split the image into tiles and save them in a folder. 
 
     :param img: the image to be compressed
     :param d: The size of the tiles
-    :param imgName: the name of the image to be processed
+    :param img_name: the name of the image to be processed
     """
     if img.mode == "RGBA":
         img = img.convert("RGB")
@@ -153,12 +149,12 @@ def tile(img, d, imgName):
     grid = product(range(0, h-h%d, d), range(0, w-w%d, d))
     for i, j in tqdm(grid):
         box = (j, i, j+d, i+d)
-        out = f'{u.dt_string}/data/dct/{imgName}/tiles/tile_{i}_{j}.jpg'
+        out = f'{u.dt_string}/data/dct/{img_name}/tiles/tile_{i}_{j}.jpg'
          
         img.crop(box).save(out)
 
 
-def writeBlocInCell(img,img2):
+def write_bloc_in_cell(img,img2):
     """
     This procedure is used to set DCT data in cells and save IDCT Tiles in folder. 
 
@@ -182,13 +178,13 @@ def writeBlocInCell(img,img2):
         arr=np.array(img8)
         block=arr.tolist()
 
-        ndct_1_1.write(x, y, formatToGridWithCommas(block), wrap_format_1)
+        ndct_1_1.write(x, y, format_to_grid_with_commas(block), wrap_format_1)
         ndct_1_1.set_row(x, 155)
         ndct_1_1.set_column(x, y, 25)
 
         # 2 - DCT
-        blockDCT = dec_DCT(str(block))
-        ndct_1_2.write(x, y, formatToGridWithCommas(blockDCT), wrap_format_1)
+        block_dct = dec_dct(str(block))
+        ndct_1_2.write(x, y, format_to_grid_with_commas(block_dct), wrap_format_1)
         ndct_1_2.set_row(x, 155)
         ndct_1_2.set_column(x, y, 25)        
 
@@ -203,13 +199,13 @@ def writeBlocInCell(img,img2):
 
 
         # 4 - Inverse DCT
-        blockIDCT=(dec_InverseDCT(formatToGridWithCommas(blockDCT)))
+        block_idct=(dec_inverse_dct(format_to_grid_with_commas(block_dct)))
 
-        ndct_1_4.write(x, y, formatToGridWithCommas(blockIDCT), wrap_format_1)
+        ndct_1_4.write(x, y, format_to_grid_with_commas(block_idct), wrap_format_1)
         ndct_1_4.set_row(x, 155)
         ndct_1_4.set_column(x, y, 25)
         
-        idct_img = Image.fromarray(np.uint8(blockIDCT))
+        idct_img = Image.fromarray(np.uint8(block_idct))
         idct_img.save(out2)        
 
 
@@ -222,15 +218,15 @@ def writeBlocInCell(img,img2):
         arr2=np.array(img__v2)
         block_v2=arr2.tolist()
 
-        ndct_2_1.write(x,y,formatToGridWithCommas(block_v2),wrap_format_2)
+        ndct_2_1.write(x,y,format_to_grid_with_commas(block_v2),wrap_format_2)
         ndct_2_1.set_row(x, 155)
         ndct_2_1.set_column(x,y, 25)
 
         # 2 - DCT
-        blockDCT2 = dec_DCT(str(block_v2))
-        # print(formatToGridWithCommas(dec_DCT(str(block_v2))))
+        block_dct2 = dec_dct(str(block_v2))
+        # print(format_to_grid_with_commas(dec_dct(str(block_v2))))
               
-        ndct_2_2.write(x, y, formatToGridWithCommas(blockDCT2), wrap_format_1) 
+        ndct_2_2.write(x, y, format_to_grid_with_commas(block_dct2), wrap_format_1) 
         ndct_2_2.set_row(x, 155)
         ndct_2_2.set_column(x, y, 25)
 
@@ -244,13 +240,13 @@ def writeBlocInCell(img,img2):
         ndct_2_3.set_column(x,y, 25)        
 
         # 4 - Inverse DCT
-        blockIDCT_v2=(dec_InverseDCT(formatToGridWithCommas(blockDCT2)))
+        block_idct_v2=(dec_inverse_dct(format_to_grid_with_commas(block_dct2)))
         
-        ndct_2_4.write(x, y, formatToGridWithCommas(blockIDCT_v2), wrap_format_2)
+        ndct_2_4.write(x, y, format_to_grid_with_commas(block_idct_v2), wrap_format_2)
         ndct_2_4.set_row(x, 155)
         ndct_2_4.set_column(x, y, 25)
         
-        idct_img = Image.fromarray(np.uint8(blockIDCT))
+        idct_img = Image.fromarray(np.uint8(block_idct))
         # 
         idct_img.save(out3)
 

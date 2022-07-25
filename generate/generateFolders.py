@@ -1,7 +1,7 @@
 from system import utils as u
 from pathlib import Path
 
-def createFolders():
+def create_folders():
     """
     Create folders for the project
     """

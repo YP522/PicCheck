@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw
 from system import utils as u
 
 
-def generateFavIcon(size, first_color, second_color):
+def generate_fav_icon(size, first_color, second_color):
     """
     Generate a square image with a rectangle of the specified color in the center
     

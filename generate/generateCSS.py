@@ -1,7 +1,7 @@
 from system import utils as u
 
 
-def generateDefaultThemes():
+def generate_default_themes():
     """
     Generate the default themes for the report
     """
@@ -62,7 +62,7 @@ def generateDefaultThemes():
         f.write(nostalgy)
 
 
-def generateReportCss():
+def generate_report_css():
 
     css = """
 

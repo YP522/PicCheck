@@ -11,12 +11,14 @@
 # _________________________________________________________________________________________________________________________________ #
 #                                                               System                                                              #
 #####################################################################################################################################
-from generate.generateFolders import createFolders
-from processing.compression import writeBlocInCell
+from generate.generateFolders import create_folders
+from generate.generateTXT import generate_txt
+from generate.generateHTML import generate_html
+from processing.compression import write_bloc_in_cell
 
 from PIL import Image
+from system.pck_M import launch_collect, launch_compare, launch_compress, NOR_DCT_1, NOR_DCT_2
 
-from system.pck_M import *
 from system import utils as u
 
 import numpy as np
@@ -24,7 +26,7 @@ import os
 #####################################################################################################################################
 
 
-def checkFile(path):
+def check_file(path):
     """
     Check if the path is a file or a directory
     
@@ -40,7 +42,7 @@ def checkFile(path):
             print('The location doesn\'t exist')
 
 
-def getIMG(file):
+def get_img(file):
     """
     This function takes a file path as an argument and returns an image object
     
@@ -57,7 +59,7 @@ def scan(img):
     :param img: The image to be scanned
     :return: The function scan returns an array of the image.
     """
-    return np.array(getIMG(img))
+    return np.array(get_img(img))
 
 
 def run(img1, img2):
@@ -65,10 +67,10 @@ def run(img1, img2):
     :param img1: The first image to compare
     :param img2: The image to compare with
     """
-    g_i1 = getIMG(img1).convert('RGBA');
-    g_i2 = getIMG(img2).convert('RGBA');
+    g_i1 = get_img(img1).convert('RGBA');
+    g_i2 = get_img(img2).convert('RGBA');
 
-    if((checkFile(img1) and checkFile(img2)) != True):
+    if((check_file(img1) and check_file(img2)) != True):
         u.log(f"{u.bad} {u.errors[0]}")
     else:
         u.log(f"{u.good} Files exists !")
@@ -79,20 +81,20 @@ def run(img1, img2):
             u.log(f"{u.good} File {g_i1.size} and file {g_i2.size} is equal !")
             u.log(f"\n{u.prefix}")
 
-            createFolders()            
+            create_folders()            
 
-            launchCollect(g_i1, g_i2)
+            launch_collect(g_i1, g_i2)
             u.log("  [1/3] End process of color collection...")
 
-            launchCompare(g_i1, g_i2)
+            launch_compare(g_i1, g_i2)
             u.log("  [2/3] End process of color compare...")
 
-            launchCompress(g_i1, g_i2)
+            launch_compress(g_i1, g_i2)
             u.log("  [3/3] End process of color compress...")
 
-            generateTXT(g_i1,g_i2)  
-            generateHTML(g_i1,g_i2)
-            writeBlocInCell(g_i1,g_i2)
+            generate_txt(g_i1,g_i2)  
+            generate_html(g_i1,g_i2)
+            write_bloc_in_cell(g_i1,g_i2)
 
             NOR_DCT_1.close()
             NOR_DCT_2.close()            

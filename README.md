@@ -1,8 +1,10 @@
 # PicCheck
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=YP522_PicCheck&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=YP522_PicCheck) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=YP522_PicCheck&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=YP522_PicCheck) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=YP522_PicCheck&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=YP522_PicCheck) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=YP522_PicCheck&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=YP522_PicCheck) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=YP522_PicCheck&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=YP522_PicCheck)
+
 Check for similarities between two images with python
 
 <p align="center">
-  <img src="https://ypetit.web-edu.fr/wp-content/uploads/2022/02/picCheck_cover.png" title="PicCheck">
+  <img src="https://ypetit.web-edu.fr/wp-content/uploads/2022/04/github_banner.png" title="PicCheck">
 </p>
 
 ## Features
