@@ -1,5 +1,5 @@
-from generate.generateHTML import *
-from generate.funcs.formatted import *
+from generate.generateHTML import get_color_by_percentage, reverse_percentage
+from generate.funcs.formatted import set_background_by_contast_color
 
 
 def set_open_html_file(title, style):
