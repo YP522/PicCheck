@@ -16,9 +16,9 @@ from generate.generateXLSX import *
 from processing.collect import get_pixel_color, get_pixel_occ, set_occurences
 from processing.compare import save_matched_pixels, get_differences, get_diff, get_delta_e_value, get_gap
 from processing.compression import tile
-from tqdm import tqdm
 
 from system import utils as u
+from tqdm import tqdm
 
 #####################################################################################################################################
 
