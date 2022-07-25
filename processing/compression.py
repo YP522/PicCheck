@@ -18,7 +18,12 @@ from PIL import Image
 
 import cv2
 import numpy as np
+<<<<<<< Updated upstream
+import skimage
+=======
 import skimage.metrics as skm
+from tqdm import tqdm
+>>>>>>> Stashed changes
 import system.utils as u
 from generate.generateXLSX import NOR_DCT_1, NOR_DCT_2, ndct_1_1, ndct_1_2, ndct_1_3, ndct_1_4, ndct_2_1, ndct_2_2, ndct_2_3, ndct_2_4
 
@@ -146,7 +151,7 @@ def tile(img, d, img_name):
         img = img.convert("RGB")
     w, h = img.size
     grid = product(range(0, h-h%d, d), range(0, w-w%d, d))
-    for i, j in grid:
+    for i, j in tqdm(grid):
         box = (j, i, j+d, i+d)
         out = f'{u.dt_string}/data/dct/{img_name}/tiles/tile_{i}_{j}.jpg'
          

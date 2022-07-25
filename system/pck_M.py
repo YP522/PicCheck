@@ -16,6 +16,7 @@ from generate.generateXLSX import *
 from processing.collect import get_pixel_color, get_pixel_occ, set_occurences
 from processing.compare import save_matched_pixels, get_differences, get_diff, get_delta_e_value, get_gap
 from processing.compression import tile
+from tqdm import tqdm
 
 from system import utils as u
 
@@ -42,8 +43,8 @@ def launch_collect(image1, image2):
     la_image1.save(u.dt_string+"/data/gra_img1.png")
     la_image2.save(u.dt_string+"/data/gra_img2.png")
 
-    for index_x in range(height):
-        for index_y in range(width):
+    for index_x in tqdm(range(height)):
+        for index_y in tqdm(range(width), leave=False):
 
         # HEXA extraction for index
             i_pxl_hexa1_n = get_pixel_color(image1, 'hexa', index_x, index_y)
@@ -126,8 +127,8 @@ def launch_compare(image1, image2):
     mat_gra_0.save(u.dt_string+"/data/matched_gra_0.png")
     mat_gra_1.save(u.dt_string+"/data/matched_gra_1.png")
 
-    for index_x in range(height):
-        for index_y in range(width):
+    for index_x in tqdm(range(height)):
+        for index_y in tqdm(range(width), leave=False):
 
             # duplicate all calls with grayscale images
             i1 = image1.getpixel((index_y, index_x))
