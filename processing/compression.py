@@ -15,6 +15,7 @@ from itertools import product
 from math import log10, sqrt
 from pathlib import Path
 from PIL import Image
+from system.pck_S import scan
 
 import cv2
 import numpy as np
@@ -132,7 +133,7 @@ def up_sampling(array):
     :param array: the array to be repeated
     :return: The upSampled image.
     """
-    return np.array(array.repeat(2, axis=0).repeat(2, axis=1))
+    return scan(array.repeat(2, axis=0).repeat(2, axis=1))
 
 
 def tile(img, d, img_name):
@@ -175,7 +176,7 @@ def write_bloc_in_cell(img,img2):
 
         # 1 - Decoding
         img8=img.crop(box).convert("L")
-        arr=np.array(img8)
+        arr=scan(img8)
         block=arr.tolist()
 
         ndct_1_1.write(x, y, format_to_grid_with_commas(block), wrap_format_1)
@@ -190,7 +191,7 @@ def write_bloc_in_cell(img,img2):
 
         # 3 - DeQuantization
         quantizedimg=img.quantize(256)
-        qarr=np.array(quantizedimg)
+        qarr=scan(quantizedimg)
         qblock=qarr.tolist()
 
         ndct_1_3.write(x, y, str(qblock), wrap_format_1)
@@ -215,7 +216,7 @@ def write_bloc_in_cell(img,img2):
 
         # 1 - Decoding
         img__v2=img2.crop(box).convert("L")
-        arr2=np.array(img__v2)
+        arr2=scan(img__v2)
         block_v2=arr2.tolist()
 
         ndct_2_1.write(x,y,format_to_grid_with_commas(block_v2),wrap_format_2)
@@ -232,7 +233,7 @@ def write_bloc_in_cell(img,img2):
 
         # 3 - DeQuantization
         quantizedimg=img2.quantize(256)
-        qarr=np.array(quantizedimg)
+        qarr=scan(quantizedimg)
         qblock_v2=qarr.tolist()
 
         ndct_2_3.write(x,y,str(qblock_v2),wrap_format_2)
