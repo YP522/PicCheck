@@ -59,7 +59,7 @@ def scan(img):
     :param img: The image to be scanned
     :return: The function scan returns an array of the image.
     """
-    return np.array(get_img(img))
+    return np.array(img)
 
 
 def run(img1, img2):
@@ -92,7 +92,7 @@ def run(img1, img2):
             launch_compress(g_i1, g_i2)
             u.log("  [3/3] End process of color compress...")
 
-            generate_txt(g_i1,g_i2)  
+            generate_txt(g_i1,g_i2)
             generate_html(g_i1,g_i2)
             write_bloc_in_cell(g_i1,g_i2)
 
