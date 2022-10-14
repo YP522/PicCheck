@@ -23,9 +23,9 @@ from tqdm import tqdm
 #####################################################################################################################################
 
 def launch_collect(image1, image2):
+    
     """
     This function is used to collect the color data from the images and save it in a spreadsheet
-    
     :param image1: the first image to compare
     :param image2: the second image to compare with the first one
     """

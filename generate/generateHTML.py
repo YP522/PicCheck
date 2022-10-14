@@ -4,7 +4,7 @@ from generate.funcs.formatted import around_value, clean_list, reverse_percentag
 from generate.generateCSS import generate_default_themes, generate_report_css
 from generate.generateTXT import generate_txt
 from generate.parts.favicon import generate_fav_icon
-from generate.parts.html import set_profile_of_picture, set_wigdet_list_for_color_col, set_wigdet_list_for_compare, set_wigdet_list_for_compression, set_close_html_file, set_open_html_file, set_start_compare_zone
+from generate.parts.html import set_profile_of_picture, set_wigdet_list_for_color_col, set_wigdet_list_for_compare, set_wigdet_list_for_compression, set_close_html_file, set_open_html_file, set_start_compare_zone, set_comparison_slider, set_structure_comparison_zone, set_details_comparison_zone, set_histogram_graphcss_graph
 from generate.parts.logo import generate_logo
 
 from processing.collect import get_color_occurences, get_color_average,get_color_dominante
@@ -17,6 +17,12 @@ page_title = "My report"
 
 
 def generate_html(nor_img1, nor_img2):
+    """
+    It generates the html file that will be used to display the report
+    
+    :param nor_img1: The first image to compare
+    :param nor_img2: The image to compare to
+    """
 
     gra_img1 = Image.open(f"{u.dt_string}/data/gra_img1.png").convert('RGB')
     gra_img2 = Image.open(f"{u.dt_string}/data/gra_img2.png").convert('RGB')
@@ -271,6 +277,22 @@ def generate_html(nor_img1, nor_img2):
                     </div>
 
                 </div>
+
+         {set_comparison_slider("2","1",nor_img1.width, nor_img1.height)}   
+         {set_structure_comparison_zone(nor_img1,nor_img2)}
+         <div class="row">
+         {set_details_comparison_zone(nor_img1)}
+
+         {set_details_comparison_zone(nor_img2)}
+         </div>
+
+            <h2 class="category">Image Histogram</h2>
+
+         <div class="row">
+         {set_histogram_graphcss_graph(nor_img1)}
+         
+         {set_histogram_graphcss_graph(nor_img2)}
+         </div>
          {set_close_html_file()}
 
     '''
