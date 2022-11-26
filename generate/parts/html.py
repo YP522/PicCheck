@@ -5,8 +5,36 @@ from processing.compression import get_psnr, get_ssim, get_mse
 from system import pck_S as s
 from charts.css import column
 
+def tag(tag, attributes={}, content=""):
+    attribute_string = " ".join(['{}="{}"'.format(key, value) for key, value in attributes.items()])
+    
+    if tag=="img" or tag=="link" or tag=="meta":
+        return "<{tag} {attributes}>".format(tag=tag,attributes=attribute_string)
+    elif tag=="!type":
+        return "<!DOCTYPE {content}>".format(content=content)
+    elif tag=="!--" :
+        return "<!-- {content} -->".format(content=content)        
+    
+    return "<{tag} {attributes}>{content}</{tag}>".format(tag=tag, attributes=attribute_string, content=content)
 
-def set_open_html_file(title, style):
+
+def set_html(content):
+    """
+    It takes a string of HTML content and returns a string of HTML content
+    
+    :param content: The content of the HTML file
+    :return: The html tag with the content of the head and body tags.
+    """
+    
+    html = tag("!--",{},"PCK HTML REPORT")+tag("!type",{},"html")+tag(
+        "html",
+        {"lang":"en", "dir":"ltr"},
+        content,
+    )
+    return html
+
+
+def set_header(title,style):
     """
     This function returns a string that contains the opening html tags for the report
     
@@ -15,38 +43,33 @@ def set_open_html_file(title, style):
     :return: The open_html_file variable is being returned.
     """
 
-    open_html_file = f'''
-    <!-- PCK HTML REPORT -->
-    <!DOCTYPE html>
-    <html lang="en" dir="ltr">
-        <head>
-            <meta charset="utf-8">
-            <title>{title}</title>
-            <link rel="stylesheet" href="assets/report.css">
-            <link rel="stylesheet" href="assets/themes/{style}.css">  <!-- edit this line to change report css theme -->
-            <link rel="icon" type="image/png" href="assets/favicon.png" />
-            <link href="http://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
-            <link rel="stylesheet" href="assets/charts.min.css">
-        </head>
-        <body>
-            <div class="header fullscreen">
-                <img src="assets/logo.png" alt="A free tool for compare 2 pictures">
-            </div>
-            <div class="page">    
-    '''
-    return open_html_file
+    html = tag("head",{},
+        tag("meta",{"charset":"utf-8"})+
+        tag("title",{},title)+
+        tag("link",{"rel":"stylesheet","href":"assets/report.css"})+
+        tag("link",{"rel":"stylesheet","href":f"assets/themes/{style}.css"})+"  "+tag("!--",{},"edit this line to change report css theme")+
+        tag("link",{"rel":"icon","type":"image/png","href":"assets/favicon.png"})+
+        tag("link",{"href":"http://fonts.cdnfonts.com/css/montserrat","rel":"stylesheet"})+
+        tag("link",{"rel":"stylesheet","href":"assets/charts.min.css"})
+    )
+    return html
 
-def set_close_html_file():
+
+def set_body(header,content):
     """
-    This function closes the html file
-    :return: The closing tags for the html file.
+    > The function `set_body` takes two arguments, `header` and `content`, and returns a string that is
+    the HTML for a body tag with the header and content inside it
+    
+    :param header: the header of the page
+    :param content: the content of the page
+    :return: The body tag with the header and content
     """
 
-    return '''
-            </div>
-        </body>
-    </html>
-    '''
+    return tag(
+    "body", 
+    {},
+    header+content)
+    
 
 def set_profile_of_picture(number, value):
     """
@@ -57,36 +80,32 @@ def set_profile_of_picture(number, value):
     :return: A string with the html code for the profile of the picture.
     """
 
-    profile_of_picture = f'''
+    profile_of_picture = tag("div",{"class": "text-center"},
+            tag("img",{"src":f"../data/img{number}.png","alt":"A free tool for compare 2 pictures"},"")+
+            tag("h3",{},f"IMG {number}")+
+            tag("div",{"class":f"level l{get_color_by_percentage(value)}"},tag("h4",{},f"{value}%"))
+        )
+    
 
-                        <div class="text-center">
-                            <img src="../data/img{number}.png" alt="A free tool for compare 2 pictures">
-                            <h3>IMG {number}</h3>
-
-                            <div class="level l{get_color_by_percentage(value)}">
-                                <h4>{value}%</h4>
-                            </div>
-                        </div>
-
-    '''
     return profile_of_picture
 
-def set_start_compare_zone(title):
-    """
-    This function creates the start of the compare zone
-    
-    :param title: The title of the category
-    :return: A string of HTML code that will be used to start a new compare zone.
-    """
 
-    start_compare_zone = f'''
-                        <div class="compareZone">
-                            <div>
-                                <h2 class="category">{title}</h2>
-                                <ul>
-    '''
-
+def set_compare_zone(title, content):
+    start_compare_zone = tag(
+        "div",
+        {"class":"compareZone"},
+        tag(
+            "div",
+            {},
+            tag(
+                "h2",
+                {"class":"category"},
+                title
+            )+content
+        )
+    )
     return start_compare_zone
+
 
 def set_wigdet_list_for_color_col(title, var1, var2, var3):
     """
@@ -101,23 +120,27 @@ def set_wigdet_list_for_color_col(title, var1, var2, var3):
     :return: A string of HTML code that will be used to create a list of items.
     """
 
-    wigdet_list_for_color_col = f'''
-                                        <li>
-                                            <div class="row">
-                                                <div class="column middlescreen">
-                                                    {title}
-                                                </div>
-                                                <div class="column middlescreen">
-                                                    <div class="row">
-                                                        <div class="column middlescreen tag {set_background_by_contast_color(tuple(var1))}" style="color:rgb{tuple(var1)}">{var1}</div>
-                                                        <div class="column middlescreen tag {get_color_by_percentage(var2)}">{var2} %</div>
-                                                        <div class="column middlescreen tag {get_color_by_percentage(var3)}">{var3} %</div>
-                                                    </div>
-                                                </div>
-                                
-                                            </div>
-                                        </li>
-    '''
+    wigdet_list_for_color_col = tag(
+        "li",
+        {},
+        tag(
+            "div",
+            {"class":"row"}, 
+            tag("div", {"class":"column middlescreen"},title)+
+            tag(
+                "div",
+                {"class":"column middlescreen"},
+                tag(
+                    "div",
+                    {"class":"row"},
+                        tag("div",{"class":f"column middlescreen tag {set_background_by_contast_color(tuple(var1))}", "style":f"color:rgb{tuple(var1)}"},var1)+
+                        tag("div",{"class":f"column middlescreen tag {get_color_by_percentage(var2)}"},f"{var2} %")+
+                        tag("div",{"class":f"column middlescreen tag {get_color_by_percentage(var3)}"},f"{var3} %")
+                )
+            )
+        )
+    )
+
     return wigdet_list_for_color_col
 
 
@@ -131,23 +154,16 @@ def set_wigdet_list_for_compare(title, var1):
     :return: A string of HTML code that will be used to create a list of widgets.
     """
 
-    wigdet_list_for_compare = f'''
-                                        <li>
-                                            <div class="row">
-                                                <div class="column middlescreen">
-                                                    {title}
-                                                </div>
-                                                <div class="column middlescreen">
-                                                    <div class="row">
-                                                        <div class="column middlescreen tag "></div>
-                                                        <div class="column middlescreen tag {get_color_by_percentage(var1)}">{var1}%</div>
-                                                        <div class="column middlescreen tag {get_color_by_percentage(reverse_percentage(var1))}">{reverse_percentage(var1)}%</div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </li>
-    '''
+    wigdet_list_for_compare = tag("li",{},
+                                tag("div",{"class":"row"},
+                                    tag("div",{"class":"column middlescreen"},title)+tag("div",{"class":"column middlescreen"},
+                                        tag("div",{"class":"row"},
+                                            tag("div",{"class":"column middlescreen tag"},"")+
+                                            tag("div",{"class":f"column middlescreen tag {get_color_by_percentage(var1)}"},f"{var1}%")+
+                                            tag("div",{"class":f"column middlescreen tag {get_color_by_percentage(reverse_percentage(var1))}"},f"{reverse_percentage(var1)}%")
+                                        ))
+                                    )
+                                )
     return wigdet_list_for_compare
 
 
@@ -162,23 +178,17 @@ def set_wigdet_list_for_compression(title, var1, var2, var3):
     :return: A string of HTML code that will be used to create a list item for the compression widget.
     """
 
-    wigdet_list_for_compression = f'''
-                                        <li>
-                                            <div class="row">
-                                                <div class="column middlescreen">
-                                                    {title}
-                                                </div>
-                                                <div class="column middlescreen">
-                                                    <div class="row">
-                                                        <div class="column middlescreen tag">{var1} %</div>
-                                                        <div class="column middlescreen tag {get_color_by_percentage(var2)}">{var2} %</div>
-                                                        <div class="column middlescreen tag {get_color_by_percentage(var3)}">{var3} %</div>
-                                                    </div>
-                                                </div>
+    wigdet_list_for_compression = tag("li",{"class":"row"},
+                                          tag("div",{"class":"column middlescreen"},title)+
+                                          tag("div",{"class":"column middlescreen"},
+                                              tag("div",{"class":"row"},
+                                                  tag("div",{"class":"column middlescreen tag"},f"{var1} %")+
+                                                  tag("div",{"class":f"column middlescreen tag {get_color_by_percentage(var2)}"},f"{var2} %")+
+                                                  tag("div",{"class":f"column middlescreen tag {get_color_by_percentage(var3)}"},f"{var3} %")
+                                              )
+                                          )
+                                      )
 
-                                            </div>
-                                        </li>
-    '''
     return wigdet_list_for_compression
 
 def set_comparison_slider(img1,img2,width,height):
@@ -191,26 +201,16 @@ def set_comparison_slider(img1,img2,width,height):
     :param height: height of the slider
     :return: A string of HTML code that will be used to create a slider.
     """
-    slider = f"""
-        <h2 class="category">Image Comparison Slider</h2>
-        <div class="row">
 
-            <!-- slider container -->
-            <div class="comparison_slider" style="width:{width}px;height:{height}px">
-
-                <!-- image left -->
-                <textarea readonly style="background: url('../data/img{img1}.png') no-repeat"></textarea>
-
-                <!-- image right -->
-                <textarea readonly style="background: url('../data/img{img2}.png') no-repeat"></textarea>
-
-                <!--  -->
-            </div>
-            <!--  -->
-
-        </div>    
-
-    """
+    slider = tag("h2",{"class":"category"},"Image Comparison Slider")+tag("div",{"class":"row"},
+                tag("!--",{},"slider container")+
+                tag("div",{"class":"comparison_slider", "style":f"width:{width}px;height:{height}px"},
+                    tag("!--",{},"image left")+
+                    tag("textarea",{"readonly":"","style":f"background: url('../data/img{img1}.png') no-repeat"},"")+
+                    tag("!--",{},"image right")+
+                    tag("textarea",{"readonly":"","style":f"background: url('../data/img{img2}.png') no-repeat"},"")
+                )
+             )
     return slider
 
 
@@ -224,21 +224,7 @@ def set_wigdet_for_structure_details(title,value):
     :return: A string of HTML code that will be used to display the structure details.
     """
 
-    wigdet_for_structure_details = f'''
-                                        <li>
-                                            <div class="row">
-                                                <div class="column middlescreen">
-                                                    {title}
-                                                </div>
-                                                <div class="column middlescreen">
-                                                    <div class="row">
-                                                        <div class="column middlescreen tag">{value}</div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </li>
-    '''
+    wigdet_for_structure_details = tag("li",{},tag("div",{"class":"row"},tag("div",{"class":"column middlescreen"},title)+tag("div",{"class":"column middlescreen"},tag("div",{"class":"row"},tag("div",{"class":"column middlescreen tag"},value)))))
     return wigdet_for_structure_details
 
 
@@ -251,25 +237,15 @@ def set_structure_comparison_zone(image1,image2):
     :param image2: The second image to compare to the first
     :return: the structure comparison zone.
     """
-    structure_comparison_zone = f"""
 
-        <h2 class="category">Image Structure Comparison</h2>
+    structure_comparison_zone = tag("h2",{"class":"category"},"Image Structure Comparison")+tag("div",{"class":"compareZone"},
+        tag("div",{},tag("ul",{},
+            set_wigdet_for_structure_details("PSNR", get_psnr(s.scan(image1),s.scan(image2)))+
+            set_wigdet_for_structure_details("SSIM", get_ssim(s.scan(image1),s.scan(image2)))+
+            set_wigdet_for_structure_details("MSE", get_mse(s.scan(image1),s.scan(image2))))
+        )
+    )
 
-        <div class="compareZone">
-            <div>
-   
-            <ul>
- 
-            {set_wigdet_for_structure_details("PSNR", get_psnr(s.scan(image1),s.scan(image2)))}
-
-            {set_wigdet_for_structure_details("SSIM", get_ssim(s.scan(image1),s.scan(image2)))}
-
-            {set_wigdet_for_structure_details("MSE", get_mse(s.scan(image1),s.scan(image2)))}                        
-            </div>           
-            </ul>             
-        </div>
-
-    """
     return structure_comparison_zone
 
 
@@ -282,21 +258,10 @@ def set_widget_for_image_details(title,value):
     :return: A string of HTML code that will be used to display the image details.
     """
 
-    widget_for_image_details = f"""
-    
-                        <li>
-                            <div class="row">
-                                <div class="column middlescreen">{title}</div>
-                                <div class="column middlescreen">
-                                <div class="row">
-                                    <div class="column middlescreen tag ">{value}</div>
-                                </div>
-                                </div>
-                            </div>
-                        </li>
+    widget_for_image_details = tag("li",{},tag("div",{"class":"row"},tag("div",{"class":"column middlescreen"},title)+tag("div",{"class":"column middlescreen"},tag("div",{"class":"row"},tag("div",{"class":"column middlescreen tag"},value)))))
 
-    """
     return widget_for_image_details
+
 
 def set_details_comparison_zone(image):
     """
@@ -306,28 +271,7 @@ def set_details_comparison_zone(image):
     :return: A string of HTML code that will be used to display the image details.
     """
 
-    details_comparison_zone = f"""
-    
-        <div class="column middlescreen">
-        <div class="compareZone">
-            <div>
-                <h2 class="category">Image Details</h2>
-                <ul>
-                    <div>
-                    <ul>
-                        {set_widget_for_image_details("Entropy",image.entropy())}
-
-                        {set_widget_for_image_details("EXIF",image.getexif())}
-                    </ul>
-                    <br>
-                    </div>
-                </ul>
-            </div>
-        </div>
-        </div>
-
-
-    """
+    details_comparison_zone = tag("div",{"class":"column middlescreen"},tag("div",{"class":"compareZone"},tag("div",{},tag("h2",{"class":"category"},"Image Details")+tag("ul",{},tag("div",{},tag("ul",{},set_widget_for_image_details("Entropy",image.entropy())+set_widget_for_image_details("EXIF",image.getexif())+tag("br",{},"")))))))
 
     return details_comparison_zone
 
@@ -339,9 +283,6 @@ def set_histogram_graphcss_graph(image):
     :param image: The image to be displayed
     :return: A string of HTML code that will be used to display the histogram of the image.
     """
-    histogram_graphcss_graph = f"""
-        <div class="column middlescreen">    
-    """;
 
     histo = image.histogram()
     histo.insert(0, "image")
@@ -355,8 +296,8 @@ def set_histogram_graphcss_graph(image):
         headers_in_first_column=True,
     )
     
-    histogram_graphcss_graph += chart
-    histogram_graphcss_graph += """
-        </div>""";
+    histogram_graphcss_graph = tag("div",{"class":"column middlescreen"},chart)
 
     return histogram_graphcss_graph
+
+
