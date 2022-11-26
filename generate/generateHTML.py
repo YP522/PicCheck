@@ -96,7 +96,7 @@ def generate_html(nor_img1, nor_img2):
                 set_profile_of_picture("1",lvl_img1)+
                 set_compare_zone("ColorCollect",
                     tag("ul",{},
-                        tag("li",{},"\n\nNormal\n\n"+
+                        tag("li",{},"Normal"+
                             tag("ul",{},
                                 set_wigdet_list_for_color_col("ColorOccurences","",col_nor_occ,reverse_percentage(col_nor_occ))+
                                 set_wigdet_list_for_color_col("ColorAverage",for_col_nor_avg_img_1,reverse_percentage(pc_col_avg),pc_col_avg)+
@@ -104,7 +104,7 @@ def generate_html(nor_img1, nor_img2):
                                 )
                             )+
                         tag("br",{},"")+
-                        tag("li",{},"\n\nGrayScale\n\n"+
+                        tag("li",{},"GrayScale"+
                             tag("ul",{},
                                 set_wigdet_list_for_color_col("ColorOccurences","",col_gra_occ,reverse_percentage(col_gra_occ))+
                                 set_wigdet_list_for_color_col("ColorAverage",for_col_gra_avg_img_1,reverse_percentage(pc_gra_col_avg),pc_gra_col_avg)+
@@ -115,13 +115,13 @@ def generate_html(nor_img1, nor_img2):
                     )+
                 set_compare_zone("ColorCompare",
                     tag("ul",{},
-                        tag("li",{},"\n\nNormal\n\n"+            
+                        tag("li",{},"Normal"+            
                             tag("ul",{},
                                     set_wigdet_list_for_compare("ColorDifference",com_nor_dif_img_1)
                                     )
                                 )+
                             tag("br",{},"")+
-                            tag("li",{},"\n\nGrayScale\n\n"+
+                            tag("li",{},"GrayScale"+
                                 tag("ul",{},
                                     set_wigdet_list_for_compare("ColorDifference",com_gra_dif_img_1)
                                     )
@@ -130,13 +130,13 @@ def generate_html(nor_img1, nor_img2):
                         )+
                 set_compare_zone("Compression",
                     tag("ul",{},
-                        tag("li",{},"\n\nNormal\n\n"+            
+                        tag("li",{},"Normal"+            
                             tag("ul",{},
                                     set_wigdet_list_for_compression("COMPRESSION LEVEL",cmp_nor_lvl_img_1,around_value(reverse_percentage(get_percentage_between(cmp_nor_lvl_img_2,cmp_nor_lvl_img_1))),around_value(get_percentage_between(cmp_nor_lvl_img_2,cmp_nor_lvl_img_1)))
                                     )
                                 )+
                             tag("br",{},"")+
-                            tag("li",{},"\n\nGrayScale\n\n"+
+                            tag("li",{},"GrayScale"+
                                 tag("ul",{},
                                     set_wigdet_list_for_compression("COMPRESSION LEVEL",cmp_gra_lvl_img_1,around_value(reverse_percentage(get_percentage_between(cmp_gra_lvl_img_2,cmp_gra_lvl_img_1))),around_value(get_percentage_between(cmp_gra_lvl_img_2,cmp_gra_lvl_img_1)))
                                     )
@@ -146,7 +146,7 @@ def generate_html(nor_img1, nor_img2):
                 set_profile_of_picture("2",lvl_img2)+
                 set_compare_zone("ColorCollect",
                     tag("ul",{},
-                        tag("li",{},"\n\nNormal\n\n"+
+                        tag("li",{},"Normal"+
                             tag("ul",{},
                                 set_wigdet_list_for_color_col("ColorOccurences","",col_nor_occ,reverse_percentage(col_nor_occ))+
                                 set_wigdet_list_for_color_col("ColorAverage",for_col_nor_avg_img_2,reverse_percentage(pc_col_avg),pc_col_avg)+
@@ -154,7 +154,7 @@ def generate_html(nor_img1, nor_img2):
                                 )
                             )+
                         tag("br",{},"")+
-                        tag("li",{},"\n\nGrayScale\n\n"+
+                        tag("li",{},"GrayScale"+
                             tag("ul",{},
                                 set_wigdet_list_for_color_col("ColorOccurences","",col_gra_occ,reverse_percentage(col_gra_occ))+
                                 set_wigdet_list_for_color_col("ColorAverage",for_col_gra_avg_img_2,reverse_percentage(pc_gra_col_avg),pc_gra_col_avg)+
@@ -165,13 +165,13 @@ def generate_html(nor_img1, nor_img2):
                     )+
                 set_compare_zone("ColorCompare",
                     tag("ul",{},
-                        tag("li",{},"\n\nNormal\n\n"+            
+                        tag("li",{},"Normal"+            
                             tag("ul",{},
                                     set_wigdet_list_for_compare("ColorDifference",com_nor_dif_img_2)
                                     )
                                 )+
                             tag("br",{},"")+
-                            tag("li",{},"\n\nGrayScale\n\n"+
+                            tag("li",{},"GrayScale"+
                                 tag("ul",{},
                                     set_wigdet_list_for_compare("ColorDifference",com_gra_dif_img_2)
                                     )
@@ -180,13 +180,13 @@ def generate_html(nor_img1, nor_img2):
                         )+
                 set_compare_zone("Compression",
                     tag("ul",{},
-                        tag("li",{},"\n\nNormal\n\n"+            
+                        tag("li",{},"Normal"+            
                             tag("ul",{},
                                     set_wigdet_list_for_compression("COMPRESSION LEVEL",cmp_nor_lvl_img_2,around_value(reverse_percentage(get_percentage_between(cmp_nor_lvl_img_2,cmp_nor_lvl_img_1))),around_value(get_percentage_between(cmp_nor_lvl_img_2,cmp_nor_lvl_img_1)))
                                     )
                                 )+
                             tag("br",{},"")+
-                            tag("li",{},"\n\nGrayScale\n\n"+
+                            tag("li",{},"GrayScale"+
                                 tag("ul",{},
                                     set_wigdet_list_for_compression("COMPRESSION LEVEL",cmp_gra_lvl_img_2,around_value(reverse_percentage(get_percentage_between(cmp_gra_lvl_img_2,cmp_gra_lvl_img_1))),around_value(get_percentage_between(cmp_gra_lvl_img_2,cmp_gra_lvl_img_1)))
                                     )
