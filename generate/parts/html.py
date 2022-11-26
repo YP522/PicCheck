@@ -49,7 +49,7 @@ def set_header(title,style):
         tag("link",{"rel":"stylesheet","href":"assets/report.css"})+
         tag("link",{"rel":"stylesheet","href":f"assets/themes/{style}.css"})+"  "+tag("!--",{},"edit this line to change report css theme")+
         tag("link",{"rel":"icon","type":"image/png","href":"assets/favicon.png"})+
-        tag("link",{"href":"http://fonts.cdnfonts.com/css/montserrat","rel":"stylesheet"})+
+        tag("link",{"href":"https://fonts.cdnfonts.com/css/montserrat","rel":"stylesheet"})+
         tag("link",{"rel":"stylesheet","href":"assets/charts.min.css"})
     )
     return html
