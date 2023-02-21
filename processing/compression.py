@@ -13,7 +13,7 @@
 #####################################################################################################################################
 from itertools import product
 from math import log10, sqrt
-from pathlib import Path
+import os
 from PIL import Image
 from system import pck_S as s
 
@@ -41,9 +41,10 @@ def get_compression_level(img, img_file):
     :return: The quality of the image.
     """
 
-    path = f"{u.dt_string}/data/{img_file}.png"
-    quality = (101-((img.width*img.height)*3)/(Path(path).stat().st_size))
-    return quality;
+    path = os.path.join(u.dt_string, "data", f"{img_file}.png")
+    file_size = os.path.getsize(path)
+    quality = (101 - ((img.width * img.height) * 3) / file_size)
+    return quality
 
 
 def get_psnr(original, compressed):

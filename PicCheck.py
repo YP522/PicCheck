@@ -7,13 +7,13 @@ version = "0.0.0"
 
 import base64
 import sys
+import os
 
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 from tkinter import BOTH, END, LEFT
 from tkinter import ttk
 from tkinter import filedialog as fd
 from tkinter.messagebox import showinfo
-from pathlib import Path
 from time import sleep
 from pck import main,u
 
@@ -90,13 +90,12 @@ def select_file(e):
 
 
 
-OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path("./executable/assets")
+OUTPUT_PATH = os.path.dirname(os.path.abspath(__file__))
+ASSETS_PATH = os.path.join(OUTPUT_PATH, "executable", "assets")
 
 
-def relative_to_assets(path: str) -> Path:
-    return ASSETS_PATH / Path(path)
-
+def relative_to_assets(path: str) -> str:
+    return os.path.join(ASSETS_PATH, path)
 
 
 #window.iconbitmap(data=b64_logo_ico)
