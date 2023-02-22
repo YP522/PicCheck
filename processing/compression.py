@@ -63,16 +63,36 @@ def get_psnr(original, compressed):
     psnr = 20 * log10(max_pixel / sqrt(mse))
     return psnr
 
-
 def get_ssim(original, compressed):
     """
     Compute the SSIM of the compressed image and the original image
     
+    special thanks to https://cvnote.ddlee.cc/2019/09/12/psnr-ssim-python
+
     :param original: The original image
     :param compressed: The compressed image
     :return: the SSIM value for the two images.
     """
-    return skm.structural_similarity(original, compressed, channel_axis=2)
+    C1 = (0.01 * 255)**2
+    C2 = (0.03 * 255)**2
+
+    img1 = original.astype(np.float64)
+    img2 = compressed.astype(np.float64)
+    kernel = cv2.getGaussianKernel(11, 1.5)
+    window = np.outer(kernel, kernel.transpose())
+
+    mu1 = cv2.filter2D(img1, -1, window)[5:-5, 5:-5]  # valid
+    mu2 = cv2.filter2D(img2, -1, window)[5:-5, 5:-5]
+    mu1_sq = mu1**2
+    mu2_sq = mu2**2
+    mu1_mu2 = mu1 * mu2
+    sigma1_sq = cv2.filter2D(img1**2, -1, window)[5:-5, 5:-5] - mu1_sq
+    sigma2_sq = cv2.filter2D(img2**2, -1, window)[5:-5, 5:-5] - mu2_sq
+    sigma12 = cv2.filter2D(img1 * img2, -1, window)[5:-5, 5:-5] - mu1_mu2
+
+    ssim_map = ((2 * mu1_mu2 + C1) * (2 * sigma12 + C2)) / ((mu1_sq + mu2_sq + C1) *
+                                                            (sigma1_sq + sigma2_sq + C2))
+    return ssim_map.mean()
 
 
 def get_mse(original, compressed):
