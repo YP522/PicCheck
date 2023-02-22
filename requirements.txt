@@ -2,7 +2,5 @@ colour-science>=0.4.1
 numpy>=1.22.3
 opencv_python>=4.5.5.64
 Pillow>=9.1.0
-scikit_image>=0.19.2
-skimage>=0.0
 typer>=0.4.1
 XlsxWriter>=3.0.3
