@@ -11,10 +11,11 @@
 # _________________________________________________________________________________________________________________________________ #
 #                                                             Machinery                                                             #
 #####################################################################################################################################
+import os
 from generate.generateXLSX import *
 
 from processing.collect import get_pixel_color, get_pixel_occ, set_occurences
-from processing.compare import save_matched_pixels, get_differences, get_diff, get_delta_e_value, get_gap
+from processing.compare import save_matched_pixels, heatmap_comparison, get_differences, get_diff, get_delta_e_value, get_gap
 from processing.compression import tile
 
 from system import utils as u
@@ -126,6 +127,20 @@ def launch_compare(image1, image2):
 
     mat_gra_0.save(u.dt_string+"/data/matched_gra_0.png")
     mat_gra_1.save(u.dt_string+"/data/matched_gra_1.png")
+
+    theme_files = os.listdir(u.dt_string+'/report/assets/themes/')
+    theme_names = [name[:-4] for name in theme_files if name.endswith('.css')]
+
+    # Boucler sur chaque thème, créer la carte de chaleur correspondante et l'enregistrer
+    for name in theme_names:
+        try:
+            output_image = heatmap_comparison((image1).convert("L"), (image2).convert("L"), colormap=name)
+            output_path = f'{u.dt_string}/data/heatmap/{name}.png'
+            output_image.save(output_path)
+            print(f"Carte de chaleur pour le thème {name} enregistrée dans {output_path}")
+        except ValueError as e:
+            print(f"Erreur: {e}")
+
 
     for index_x in tqdm(range(height)):
         for index_y in tqdm(range(width), leave=False):

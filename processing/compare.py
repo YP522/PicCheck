@@ -12,7 +12,11 @@
 #                                                             Machinery                                                             #
 #####################################################################################################################################
 import colour
-from PIL import Image, ImageDraw
+from PIL import Image
+from system import utils as u
+import numpy as np
+import cv2
+
 #####################################################################################################################################
 # For XLSX report
 
@@ -142,3 +146,62 @@ def save_matched_pixels(image1, image2, mode):
             if get_diff(i1, i2, mode) == 0:
                 img.putpixel((index_y, index_x), i1)            
     return img
+
+
+def read_color_palette(name='Viridis'):
+    filename = u.dt_string+f'/report/assets/themes/{name}.css'
+    with open(filename, 'r') as f:
+        contents = f.read()
+    lines = contents.split('\n')
+    if len(lines) == 0:
+        raise ValueError(f'Empty file: {filename}')
+    elif len(lines) == 1:
+        raise ValueError(f'Invalid format: {filename}')
+    else:
+        levelA = lines[1].split(':')[1].strip()
+        levelB = lines[2].split(':')[1].strip()
+        levelC = lines[3].split(':')[1].strip()
+        levelD = lines[4].split(':')[1].strip()
+        levelE = lines[5].split(':')[1].strip()
+        return [levelA, levelB, levelC, levelD, levelE]
+
+
+def heatmap_comparison(original_image, test_image, colormap='Viridis'):
+    # Charger le fichier CSS pour la palette de couleurs
+    levels = read_color_palette(colormap)
+    
+    # Afficher les informations sur les niveaux de couleur
+    print(f"Palette de couleurs '{colormap}':")
+    for i, level in enumerate(levels):
+        print(f"  {level}: {i*100/(len(levels)-1):.1f}% de différence")
+    print()
+
+    # Normaliser les images de niveaux de gris pour une plage de valeurs entre 0 et 1
+    original_normalized = np.array(original_image) / 255.0
+    test_normalized = np.array(test_image) / 255.0
+
+    # Calculer la différence normalisée entre les deux images de niveaux de gris
+    diff_normalized = np.abs(original_normalized - test_normalized)
+
+    # Créer la palette de couleurs
+    colors = [np.array(tuple(int(c[i:i+2], 16) for i in (1, 3, 5))) for c in levels]
+    color_indices = np.digitize(diff_normalized, np.linspace(0, 1, len(levels) + 1)[1:-1])
+    color_palette = np.array(colors)[color_indices]
+
+    # Calculer le pourcentage d'utilisation de chaque niveau de couleur
+    color_counts = np.bincount(color_indices.flatten(), minlength=len(levels))
+    color_percentages = color_counts / np.sum(color_counts)
+
+    # Afficher les informations sur les couleurs utilisées
+    print("Couleurs utilisées :")
+    for i, level in enumerate(levels):
+        print(f"  {level}: {color_counts[i]:d} pixels ({color_percentages[i]*100:.1f}%)")
+    print()
+
+    # Convertir la carte de chaleur en une image
+    heatmap_image = Image.fromarray(np.uint8(color_palette))
+
+    # Superposer l'image originale et la carte de chaleur avec une transparence de 50%
+    output_image = Image.blend(original_image.convert('RGB'), heatmap_image, 0.5)
+
+    return output_image

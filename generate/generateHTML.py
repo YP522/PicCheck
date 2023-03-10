@@ -214,5 +214,4 @@ def generate_html(nor_img1, nor_img2):
         f.write(html)
     generate_fav_icon(16, tuple(for_col_nor_avg_img_2), tuple(for_col_nor_avg_img_1))
     generate_logo()
-    generate_report_css()
-    generate_default_themes()
+

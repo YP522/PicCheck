@@ -3,7 +3,7 @@ from datetime import datetime
 
 author  = "YP522"
 email   = "yp@ypetit.web-edu.fr"
-version = "0.0.0"
+version = "1.0.0"
 prefix  = "[PCK]"
 line    = "#######################################################################################"
 good    = "[√]"
