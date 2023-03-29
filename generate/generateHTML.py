@@ -4,7 +4,7 @@ from generate.funcs.formatted import around_value, clean_list, reverse_percentag
 from generate.generateCSS import generate_default_themes, generate_report_css
 from generate.generateTXT import generate_txt
 from generate.parts.favicon import generate_fav_icon
-from generate.parts.html import set_body, set_details_comparison_zone, set_html, set_profile_of_picture, set_wigdet_list_for_color_col, set_compare_zone, set_header, set_comparison_slider, set_structure_comparison_zone, set_histogram_graphcss_graph, set_wigdet_list_for_compare, set_wigdet_list_for_compression, tag
+from generate.parts.html import set_body, set_details_comparison_zone, set_html, set_profile_of_picture, set_wigdet_list_for_color_col, set_compare_zone, set_header, set_comparison_slider, set_structure_comparison_zone, set_histogram_graphcss_graph, set_wigdet_list_for_compare, set_wigdet_list_for_compression, set_image_heatmap, tag
 from generate.parts.logo import generate_logo
 
 from processing.collect import get_color_occurences, get_color_average,get_color_dominante
@@ -203,7 +203,9 @@ def generate_html(nor_img1, nor_img2):
                     set_details_comparison_zone(nor_img2)
                 )+
                 tag("h2",{"class":"category"},"Image Histogram")+
-                tag("div",{"class":"row"},set_histogram_graphcss_graph(nor_img1)+set_histogram_graphcss_graph(nor_img2))
+                tag("div",{"class":"row"},set_histogram_graphcss_graph(nor_img1)+set_histogram_graphcss_graph(nor_img2))+
+                tag("h2",{"class":"category"},"Image HeatMap")+
+                tag("div",{"class":"row"},set_image_heatmap())
             )
         )
    

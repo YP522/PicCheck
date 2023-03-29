@@ -301,3 +301,10 @@ def set_histogram_graphcss_graph(image):
     return histogram_graphcss_graph
 
 
+def set_image_heatmap():
+    """
+    Write HTML image tag in html file  
+
+    :return: A string of HTML code that will be used to display the heatmap of the image.
+    """
+    return tag("div",{"class":"column middlescreen"}, tag("img",{"src":"../data/heatmap/Viridis.png"},""));
