@@ -110,18 +110,20 @@ def get_color_differences(image1, image2,):
     :param image2: The image to compare to
     :return: The number of pixels that are the same in both images.
     """
-
-    matched_pixels = []
-
-    for index_x in range(image1.height):
-        for index_y in range(image1.width):
-
-            i1 = image1.getpixel((index_y, index_x))
-            i2 = image2.getpixel((index_y, index_x))
-
-            if get_diff(i1, i2, 1) == 0:
-                matched_pixels.append(0)
-    return len(matched_pixels)
+    # Convert the images to NumPy arrays
+    np_image1 = np.array(image1)
+    np_image2 = np.array(image2)
+    
+    # Calculate the differences for all pixels using broadcasting
+    differences = np.abs(np_image1 - np_image2)
+    
+    # Calculate the average differences across color channels
+    average_differences = np.mean(differences, axis=2)
+    
+    # Count the number of pixels with zero differences
+    matched_pixels = np.count_nonzero(average_differences == 0)
+    
+    return matched_pixels
 
 
 def save_matched_pixels(image1, image2, mode):
