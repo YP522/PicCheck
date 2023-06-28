@@ -58,9 +58,9 @@ def get_pixel_color(image, mode, x, y):
         return '#%02x%02x%02x' % image_rgb.getpixel((y, x))
 
 
-def set_occurences(image, index, sheet):
+def set_occurrences(image, index, sheet):
     """
-    This function takes in an image and an index and writes the occurences of that index to the excel
+    This function takes in an image and an index and writes the occurrences of that index to the excel
     sheet
     
     :param image: the image to be analyzed
@@ -71,7 +71,7 @@ def set_occurences(image, index, sheet):
     sheet.write(index, 1, get_pixel_occ(image)[index][1])
 
 
-def get_color_occurences(image1, image2):
+def get_color_occurrences(image1, image2):
     """
     Given two images, return the ratio of the number of pixels that are the same in both images
     

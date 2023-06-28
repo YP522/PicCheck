@@ -14,7 +14,7 @@
 import os
 from generate.generateXLSX import *
 
-from processing.collect import get_pixel_color, get_pixel_occ, set_occurences
+from processing.collect import get_pixel_color, get_pixel_occ, set_occurrences
 from processing.compare import save_matched_pixels, heatmap_comparison, get_differences, get_diff, get_delta_e_value, get_gap
 from processing.compression import tile
 
@@ -90,14 +90,14 @@ def launch_collect(image1, image2):
             gcol_6.write(index_x, index_y, str(i_pxl_rgba2_g))
 
     for index_1 in range(len(get_pixel_occ(image1))):
-        set_occurences(image1, index_1, ncol_7)
+        set_occurrences(image1, index_1, ncol_7)
     for index_1 in range(len(get_pixel_occ(la_image1))):
-        set_occurences(la_image1, index_1, gcol_7)
+        set_occurrences(la_image1, index_1, gcol_7)
 
     for index_2 in range(len(get_pixel_occ(image2))):
-        set_occurences(image2, index_2, ncol_8)
+        set_occurrences(image2, index_2, ncol_8)
     for index_2 in range(len(get_pixel_occ(la_image2))):
-        set_occurences(la_image2, index_2, gcol_8)
+        set_occurrences(la_image2, index_2, gcol_8)
 
     NOR_COL.close()
     GRA_COL.close()

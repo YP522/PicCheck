@@ -7,7 +7,7 @@ from generate.parts.favicon import generate_fav_icon
 from generate.parts.html import set_body, set_details_comparison_zone, set_html, set_profile_of_picture, set_wigdet_list_for_color_col, set_compare_zone, set_header, set_comparison_slider, set_structure_comparison_zone, set_histogram_graphcss_graph, set_wigdet_list_for_compare, set_wigdet_list_for_compression, set_image_heatmap, tag
 from generate.parts.logo import generate_logo
 
-from processing.collect import get_color_occurences, get_color_average,get_color_dominante
+from processing.collect import get_color_occurrences, get_color_average,get_color_dominante
 from processing.compare import get_color_differences, get_diff
 from processing.compression import get_compression_level
 
@@ -29,7 +29,7 @@ def generate_html(nor_img1, nor_img2):
 
     # revoir nomination des variables images
 
-    col_nor_occ = around_value(get_color_occurences(nor_img1, nor_img2)[1])
+    col_nor_occ = around_value(get_color_occurrences(nor_img1, nor_img2)[1])
     col_nor_avg_img_1 = get_color_average(nor_img1, nor_img2)[0]
     col_nor_avg_img_2 = get_color_average(nor_img1, nor_img2)[1]
     for_col_nor_avg_img_1 = clean_list(col_nor_avg_img_1)
@@ -41,7 +41,7 @@ def generate_html(nor_img1, nor_img2):
     for_col_nor_dom_img_2 = clean_list(col_nor_dom_img_2)
     pc_col_dom = get_diff(col_nor_dom_img_1, col_nor_dom_img_2, 0)
 
-    col_gra_occ = around_value(get_color_occurences(gra_img1, gra_img2)[1])
+    col_gra_occ = around_value(get_color_occurrences(gra_img1, gra_img2)[1])
     col_gra_avg_img_1 = get_color_average(gra_img1, gra_img2)[0]
     col_gra_avg_img_2 = get_color_average(gra_img1, gra_img2)[1]
     for_col_gra_avg_img_1 = clean_list(col_gra_avg_img_1)
