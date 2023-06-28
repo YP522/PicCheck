@@ -14,7 +14,6 @@
 from system import utils as u
 from PIL import Image, ImageStat
 from collections import Counter
-import numpy as np
 import difflib
 #####################################################################################################################################
 

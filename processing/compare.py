@@ -57,8 +57,8 @@ def get_diff(c1, c2, mode):
         perc1 = round((p1+p2+p3)/3)
         perc2 = round((_p1+_p2+_p3)/3)
     elif mode == 1:
-        perc1 = p1+p2+p3/3
-        perc2 = _p1+_p2+_p3/3
+        perc1 = (p1+p2+p3)/3
+        perc2 = (_p1+_p2+_p3)/3
 
     return abs(perc1 - perc2);
 
