@@ -137,9 +137,9 @@ def launch_compare(image1, image2):
             output_image = heatmap_comparison((image1).convert("L"), (image2).convert("L"), colormap=name)
             output_path = f'{u.dt_string}/data/heatmap/{name}.png'
             output_image.save(output_path)
-            print(f"Carte de chaleur pour le thème {name} enregistrée dans {output_path}")
+            print(f"Heatmap for the theme {name} recorded in {output_path}")
         except ValueError as e:
-            print(f"Erreur: {e}")
+            print(f"Error: {e}")
 
 
     for index_x in tqdm(range(height)):

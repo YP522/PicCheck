@@ -186,9 +186,9 @@ def heatmap_comparison(original_image, test_image, colormap='Viridis'):
     levels = read_color_palette(colormap)
     
     # Display information on colour levels
-    print(f"Palette de couleurs '{colormap}':")
+    print(f"Color palette'{colormap}':")
     for i, level in enumerate(levels):
-        print(f"  {level}: {i*100/(len(levels)-1):.1f}% de différence")
+        print(f"  {level}: {i*100/(len(levels)-1):.1f}% of differences")
     print()
 
     # Normalize grayscale images to a range of values between 0 and 1
@@ -208,7 +208,7 @@ def heatmap_comparison(original_image, test_image, colormap='Viridis'):
     color_percentages = color_counts / np.sum(color_counts)
 
     # Display information on the colours used
-    print("Couleurs utilisées :")
+    print("Colors used :")
     for i, level in enumerate(levels):
         print(f"  {level}: {color_counts[i]:d} pixels ({color_percentages[i]*100:.1f}%)")
     print()
