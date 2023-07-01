@@ -105,4 +105,4 @@ def run(img1, img2):
             u.log(f"\n{u.prefix} \n{u.prefix} {u.good} End of PicCheck Consultation. Find results and Enjoy !")
             u.log(u.slogan)
             u.log(f"\n{u.prefix} Please see report at : {u.dt_string}/report/report.html")
-
+            os.startfile(f"{os.getcwd()}/{u.dt_string}")
