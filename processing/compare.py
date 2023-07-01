@@ -129,24 +129,21 @@ def get_color_differences(image1, image2,):
 def save_matched_pixels(image1, image2, mode):
     """
     Given two images, this function will create a new image where the pixels of the first image are
-    retained if and only if the corresponding pixels in the second image are the same
+    retained if and only if the corresponding pixels in the second image are the same.
     
     :param image1: The first image to compare
     :param image2: The image to compare against
     :param mode: 
     :return: The image with the matched pixels in alpha.
     """
+    def pixel_match(pixel1, pixel2):
+        return get_diff(pixel1, pixel2, mode) == 0
+
     width, height = image1.size
-    img = Image.new('RGBA', (width,height), (255,0,0,0))
+    img = Image.new('RGBA', (width, height), (255, 0, 0, 0))
 
-    for index_x in range(height):
-        for index_y in range(width):
+    img.putdata([pixel1 if pixel_match(pixel1, pixel2) else (0, 0, 0, 0) for pixel1, pixel2 in zip(image1.getdata(), image2.getdata())])
 
-            i1 = image1.getpixel((index_y, index_x))
-            i2 = image2.getpixel((index_y, index_x))
-
-            if get_diff(i1, i2, mode) == 0:
-                img.putpixel((index_y, index_x), i1)            
     return img
 
 
