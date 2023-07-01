@@ -12,7 +12,11 @@
 #                                                             Machinery                                                             #
 #####################################################################################################################################
 import colour
-from PIL import Image, ImageDraw
+from PIL import Image
+from system import utils as u
+import numpy as np
+import cv2
+
 #####################################################################################################################################
 # For XLSX report
 
@@ -53,8 +57,8 @@ def get_diff(c1, c2, mode):
         perc1 = round((p1+p2+p3)/3)
         perc2 = round((_p1+_p2+_p3)/3)
     elif mode == 1:
-        perc1 = p1+p2+p3/3
-        perc2 = _p1+_p2+_p3/3
+        perc1 = (p1+p2+p3)/3
+        perc2 = (_p1+_p2+_p3)/3
 
     return abs(perc1 - perc2);
 
@@ -106,39 +110,113 @@ def get_color_differences(image1, image2,):
     :param image2: The image to compare to
     :return: The number of pixels that are the same in both images.
     """
-
-    matched_pixels = []
-
-    for index_x in range(image1.height):
-        for index_y in range(image1.width):
-
-            i1 = image1.getpixel((index_y, index_x))
-            i2 = image2.getpixel((index_y, index_x))
-
-            if get_diff(i1, i2, 1) == 0:
-                matched_pixels.append(0)
-    return len(matched_pixels)
+    # Convert the images to NumPy arrays
+    np_image1 = np.array(image1)
+    np_image2 = np.array(image2)
+    
+    # Calculate the differences for all pixels using broadcasting
+    differences = np.abs(np_image1 - np_image2)
+    
+    # Calculate the average differences across color channels
+    average_differences = np.mean(differences, axis=2)
+    
+    # Count the number of pixels with zero differences
+    matched_pixels = np.count_nonzero(average_differences == 0)
+    
+    return matched_pixels
 
 
 def save_matched_pixels(image1, image2, mode):
     """
     Given two images, this function will create a new image where the pixels of the first image are
-    retained if and only if the corresponding pixels in the second image are the same
+    retained if and only if the corresponding pixels in the second image are the same.
     
     :param image1: The first image to compare
     :param image2: The image to compare against
     :param mode: 
     :return: The image with the matched pixels in alpha.
     """
+    def pixel_match(pixel1, pixel2):
+        return get_diff(pixel1, pixel2, mode) == 0
+
     width, height = image1.size
-    img = Image.new('RGBA', (width,height), (255,0,0,0))
+    img = Image.new('RGBA', (width, height), (255, 0, 0, 0))
 
-    for index_x in range(height):
-        for index_y in range(width):
+    img.putdata([pixel1 if pixel_match(pixel1, pixel2) else (0, 0, 0, 0) for pixel1, pixel2 in zip(image1.getdata(), image2.getdata())])
 
-            i1 = image1.getpixel((index_y, index_x))
-            i2 = image2.getpixel((index_y, index_x))
-
-            if get_diff(i1, i2, mode) == 0:
-                img.putpixel((index_y, index_x), i1)            
     return img
+
+
+def read_color_palette(name='Viridis'):
+    """
+    It reads a CSS file and returns a list of colors
+    
+    :param name: the name of the color palette to use, defaults to Viridis (optional)
+    :return: A list of 5 colors.
+    """
+    filename = u.dt_string+f'/report/assets/themes/{name}.css'
+    with open(filename, 'r') as f:
+        contents = f.read()
+    lines = contents.split('\n')
+    if len(lines) == 0:
+        raise ValueError(f'Empty file: {filename}')
+    elif len(lines) == 1:
+        raise ValueError(f'Invalid format: {filename}')
+    else:
+        levelA = lines[1].split(':')[1].strip()
+        levelB = lines[2].split(':')[1].strip()
+        levelC = lines[3].split(':')[1].strip()
+        levelD = lines[4].split(':')[1].strip()
+        levelE = lines[5].split(':')[1].strip()
+        return [levelA, levelB, levelC, levelD, levelE]
+
+
+def heatmap_comparison(original_image, test_image, colormap='Viridis'):
+    """
+    It takes two grayscale images, calculates the difference between them, and then creates a heat map
+    of the difference.
+    
+    :param original_image: The original image
+    :param test_image: The image to compare to the original image
+    :param colormap: The name of the colour palette to use, defaults to Viridis (optional)
+    :return: The heatmap_comparison function returns an image that is a combination of the original
+    image and the heatmap.
+    """
+    # Load the CSS file for the colour scheme
+    levels = read_color_palette(colormap)
+    
+    # Display information on colour levels
+    print(f"Color palette'{colormap}':")
+    for i, level in enumerate(levels):
+        print(f"  {level}: {i*100/(len(levels)-1):.1f}% of differences")
+    print()
+
+    # Normalize grayscale images to a range of values between 0 and 1
+    original_normalized = np.array(original_image) / 255.0
+    test_normalized = np.array(test_image) / 255.0
+
+    # Calculate the normalized difference between the two grayscale images
+    diff_normalized = np.abs(original_normalized - test_normalized)
+
+    # Create the colour palette
+    colors = [np.array(tuple(int(c[i:i+2], 16) for i in (1, 3, 5))) for c in levels]
+    color_indices = np.digitize(diff_normalized, np.linspace(0, 1, len(levels) + 1)[1:-1])
+    color_palette = np.array(colors)[color_indices]
+
+    # Calculate the percentage use of each colour level
+    color_counts = np.bincount(color_indices.flatten(), minlength=len(levels))
+    color_percentages = color_counts / np.sum(color_counts)
+
+    # Display information on the colours used
+    print("Colors used :")
+    for i, level in enumerate(levels):
+        print(f"  {level}: {color_counts[i]:d} pixels ({color_percentages[i]*100:.1f}%)")
+    print()
+
+    # Convert the heat map to an image
+    heatmap_image = Image.fromarray(np.uint8(color_palette))
+
+    # Overlay the original image and the heat map with 50% transparency
+    output_image = Image.blend(original_image.convert('RGB'), heatmap_image, 0.5)
+
+    return output_image

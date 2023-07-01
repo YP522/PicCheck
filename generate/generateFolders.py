@@ -7,6 +7,7 @@ def create_folders():
     """
     os.makedirs(u.dt_string+"/data/color/normal", exist_ok=True)
     os.makedirs(u.dt_string+"/data/color/grayscale", exist_ok=True)
+    os.makedirs(u.dt_string+"/data/heatmap", exist_ok=True)    
     os.makedirs(u.dt_string+"/report/assets/themes", exist_ok=True)
 
     os.makedirs(u.dt_string+"/data/dct/img1/tiles/", exist_ok=True)  

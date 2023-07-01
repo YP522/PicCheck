@@ -11,10 +11,11 @@
 # _________________________________________________________________________________________________________________________________ #
 #                                                             Machinery                                                             #
 #####################################################################################################################################
+import os
 from generate.generateXLSX import *
 
-from processing.collect import get_pixel_color, get_pixel_occ, set_occurences
-from processing.compare import save_matched_pixels, get_differences, get_diff, get_delta_e_value, get_gap
+from processing.collect import get_pixel_color, get_pixel_occ, set_occurrences
+from processing.compare import save_matched_pixels, heatmap_comparison, get_differences, get_diff, get_delta_e_value, get_gap
 from processing.compression import tile
 
 from system import utils as u
@@ -89,14 +90,14 @@ def launch_collect(image1, image2):
             gcol_6.write(index_x, index_y, str(i_pxl_rgba2_g))
 
     for index_1 in range(len(get_pixel_occ(image1))):
-        set_occurences(image1, index_1, ncol_7)
+        set_occurrences(image1, index_1, ncol_7)
     for index_1 in range(len(get_pixel_occ(la_image1))):
-        set_occurences(la_image1, index_1, gcol_7)
+        set_occurrences(la_image1, index_1, gcol_7)
 
     for index_2 in range(len(get_pixel_occ(image2))):
-        set_occurences(image2, index_2, ncol_8)
+        set_occurrences(image2, index_2, ncol_8)
     for index_2 in range(len(get_pixel_occ(la_image2))):
-        set_occurences(la_image2, index_2, gcol_8)
+        set_occurrences(la_image2, index_2, gcol_8)
 
     NOR_COL.close()
     GRA_COL.close()
@@ -126,6 +127,20 @@ def launch_compare(image1, image2):
 
     mat_gra_0.save(u.dt_string+"/data/matched_gra_0.png")
     mat_gra_1.save(u.dt_string+"/data/matched_gra_1.png")
+
+    theme_files = os.listdir(u.dt_string+'/report/assets/themes/')
+    theme_names = [name[:-4] for name in theme_files if name.endswith('.css')]
+
+    # Boucler sur chaque thème, créer la carte de chaleur correspondante et l'enregistrer
+    for name in theme_names:
+        try:
+            output_image = heatmap_comparison((image1).convert("L"), (image2).convert("L"), colormap=name)
+            output_path = f'{u.dt_string}/data/heatmap/{name}.png'
+            output_image.save(output_path)
+            print(f"Heatmap for the theme {name} recorded in {output_path}")
+        except ValueError as e:
+            print(f"Error: {e}")
+
 
     for index_x in tqdm(range(height)):
         for index_y in tqdm(range(width), leave=False):

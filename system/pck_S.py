@@ -15,6 +15,7 @@ from generate.generateFolders import create_folders
 from generate.generateTXT import generate_txt
 from generate.generateHTML import generate_html
 from processing.compression import write_bloc_in_cell
+from generate.generateCSS import generate_default_themes, generate_report_css
 
 from PIL import Image
 from system.pck_M import launch_collect, launch_compare, launch_compress, NOR_DCT_1, NOR_DCT_2
@@ -81,7 +82,9 @@ def run(img1, img2):
             u.log(f"{u.good} File {g_i1.size} and file {g_i2.size} is equal !")
             u.log(f"\n{u.prefix}")
 
-            create_folders()            
+            create_folders()
+            generate_report_css()
+            generate_default_themes()          
 
             launch_collect(g_i1, g_i2)
             u.log("  [1/3] End process of color collection...")
@@ -102,4 +105,4 @@ def run(img1, img2):
             u.log(f"\n{u.prefix} \n{u.prefix} {u.good} End of PicCheck Consultation. Find results and Enjoy !")
             u.log(u.slogan)
             u.log(f"\n{u.prefix} Please see report at : {u.dt_string}/report/report.html")
-
+            os.startfile(f"{os.getcwd()}/{u.dt_string}")
